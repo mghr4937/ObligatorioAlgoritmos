@@ -449,14 +449,55 @@ public class SistemaImpl implements ISistema {
 
 	@Override
 	public TipoRet informeCiudades() {
-		// TODO Auto-generated method stub
-		return TipoRet.NO_IMPLEMENTADA;
+		Ciudad ciudad;
+		Ruta rutaDirecta;
+		int amb;
+		NodoLista nodoCiudad = this.listaCiudades.ObtenerElementoPrimero();
+		while (nodoCiudad  !=null){
+			ciudad = (Ciudad)nodoCiudad .getDato();
+			System.out.println("Informe Ciudad: " + ciudad.getiCiudadId());
+			NodoLista nodoRutaDir = ciudad.getListaRutas().ObtenerElementoPrimero();
+			while (nodoRutaDir != null){
+				rutaDirecta = (Ruta)nodoRutaDir.getDato();
+				System.out.println("Ruta directa a " + rutaDirecta.getCiudadDestino().getiCiudadId() +
+						",minutos " + rutaDirecta.getiMinutosViaje());				
+			}
+			amb = this.getAmbulanciasCiudadEstado(ciudad.getiCiudadId(), EstadoAmbulancia.DISPONIBLE).contador();
+			System.out.println("Ambulancias disponibles: " + amb);
+			amb = this.getAmbulanciasCiudadEstado(ciudad.getiCiudadId(), EstadoAmbulancia.NO_DISPONIBLE).contador();
+			System.out.println("Ambulancias no disponibles: " + amb);
+			nodoCiudad = nodoCiudad.getSiguiente();
+		}
+		return TipoRet.OK;
 	}
+	
+	
 
 	@Override
 	public TipoRet ciudadesEnRadio(int ciudadID, int duracionViaje) {
-		// TODO Auto-generated method stub
-		return TipoRet.NO_IMPLEMENTADA;
+		Ciudad ciudad = this.getCiudad(ciudadID);		
+		if(ciudad != null){
+			if(duracionViaje > 0){
+				Ruta ruta;
+				System.out.println("Ciudades en radio de " + duracionViaje + " minutos:");
+				NodoLista nodoRuta = ciudad.getListaRutas().ObtenerElementoPrimero();
+				while(nodoRuta != null){
+					ruta = (Ruta)nodoRuta.getDato();
+					if(ruta.getiMinutosViaje() <= duracionViaje){
+						System.out.println("Ciudad " + ruta.getCiudadDestino().getiCiudadId() + 
+								" a " + ruta.getiMinutosViaje() + " minutos.");
+					}
+					nodoRuta = nodoRuta.getSiguiente();
+				}				
+				return TipoRet.OK;
+			}else{
+				System.out.println("La duracion del viaje debe ser mayor que 0");
+				return TipoRet.ERROR2;
+			}			
+		}else{
+			System.out.println("La ciudad " + ciudadID + " no existe.");
+			return TipoRet.ERROR1;
+		}		
 	}
 
 	//Precondición: No existe un chofer de cédula cedula como chofer habilitado para conducir la ambulancia ambulanciaID
@@ -582,5 +623,21 @@ public class SistemaImpl implements ISistema {
 		}
 		return null;
 	}
+	
+	
+	public ILista getAmbulanciasCiudadEstado(int ciudadID, EstadoAmbulancia estado){
+		ILista ret = new ListaSimplementeEncadenada();
+		Ambulancia amb;
+		NodoLista nodoAmb = this.listaAmbulancias.ObtenerElementoPrimero();
+		while (nodoAmb != null){
+			amb = (Ambulancia)nodoAmb.getDato();
+			if(amb.getCiudadActual().getiCiudadId() == ciudadID && amb.geteEstado() == estado){
+				ret.insertarOrdenado(nodoAmb);
+			}			
+			nodoAmb = nodoAmb.getSiguiente();
+		}	
+		return ret;		
+	}
+	
 
 }
