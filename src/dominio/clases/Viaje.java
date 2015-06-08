@@ -1,78 +1,62 @@
 package dominio.clases;
 
 public class Viaje {
-	
-	private Ciudad ciudadOrigen;
-	private Ciudad ciudadDestino;
-	private int demoraMinutos;
+
+	private Ruta ruta;
 	private Ambulancia ambulancia;
-	
+
 	public Ambulancia getAmbulancia() {
 		return ambulancia;
 	}
+
 	public void setAmbulancia(Ambulancia ambulancia) {
 		this.ambulancia = ambulancia;
 	}
-	public Ciudad getCiudadOrigen() {
-		return ciudadOrigen;
+
+	public Ruta getRuta() {
+		return ruta;
 	}
-	public void setCiudadOrigen(Ciudad ciudadOrigen) {
-		this.ciudadOrigen = ciudadOrigen;
+
+	public void setRuta(Ruta ruta) {
+		this.ruta = ruta;
 	}
-	public Ciudad getCiudadDestino() {
-		return ciudadDestino;
+
+	public Viaje() {
+
 	}
-	public void setCiudadDestino(Ciudad ciudadDestino) {
-		this.ciudadDestino = ciudadDestino;
+
+	public Viaje(Ambulancia laAmbulancia, Ruta ruta) {
+		this.ruta = ruta;
+		this.ambulancia = laAmbulancia;
 	}
-	public int getDemoraMinutos() {
-		return demoraMinutos;
-	}
-	public void setDemoraMinutos(int demoraMinutos) {
-		this.demoraMinutos = demoraMinutos;
-	}
-	
-	public Viaje(){
-		
-	}
-	
-	public Viaje (Ciudad or, Ciudad des, int min){
-		this.ciudadOrigen = or;
-		this.ciudadDestino = des;
-		this.demoraMinutos = min;
-	}
-	
+
 	@Override
 	public boolean equals(Object other) {
 		if (!(other instanceof Viaje)) {
 			return false;
 		}
 		Viaje that = (Viaje) other;
-		return this.getCiudadDestino().getiCiudadId() == that.getCiudadDestino().getiCiudadId()  ||
-				this.getCiudadOrigen().getiCiudadId() == that.getCiudadOrigen().getiCiudadId();
+		return this.getAmbulancia().equals(that.getAmbulancia())
+				&& this.getRuta().equals(that.getRuta());
 	}
-	
-	
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
-				+ ((ciudadDestino == null) ? 0 : ciudadDestino.hashCode());
-		result = prime * result
-				+ ((ciudadOrigen == null) ? 0 : ciudadOrigen.hashCode());
-		result = prime * result + demoraMinutos;
+				+ ((ambulancia == null) ? 0 : ambulancia.hashCode());
+		result = prime * result + ((ruta == null) ? 0 : ruta.hashCode());
 		return result;
 	}
 	
 	@Override
 	public String toString() {
-		return "CiudadOrigen: " + this.ciudadOrigen + ", ciudadDestino: "
-				+ this.ciudadDestino + ", demoraMinutos: " + this.demoraMinutos;
+		return "CiudadOrigen: " + this.ruta.getCiudadOrigen()
+				+ ", ciudadDestino: " + this.getRuta().getCiudadDestino()
+				+ ", demoraMinutos: " + this.ruta.getiMinutosViaje()
+				+ ", ambulancia matrícula "
+				+ this.ambulancia.getsIdAmbulancia();
 	}
-	
-	
 
-	
-	
 }

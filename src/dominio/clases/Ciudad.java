@@ -83,10 +83,10 @@ public class Ciudad implements Comparable<Ciudad>{
 	
 	@Override
 	public int compareTo(Ciudad other) {
-		String primerNombre = this.sNombreCiudad;
-		String segundoNombre = other.sNombreCiudad;
+		int primerId = (int)this.getiCiudadId();
+		int segundoId = (int)other.getiCiudadId();
 
-		return (primerNombre).compareTo(segundoNombre);
+		return ((Integer)(primerId)).compareTo((Integer)segundoId);
 	}
 
 }

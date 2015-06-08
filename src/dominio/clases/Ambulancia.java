@@ -1,7 +1,6 @@
 package dominio.clases;
 
 import dominio.clases.Ciudad;
-import dominio.comparadores.AmbulanciaComparatorById;
 import estructuras.listas.ILista;
 import estructuras.listas.ListaSimplementeEncadenada;
 
@@ -110,8 +109,8 @@ public class Ambulancia implements Comparable<Ambulancia> {
 
 	@Override
 	public String toString() {
-		return "Datos Ambulancia " + this.sIdAmbulancia + "/n" +
-			   "Estado: " + this.eEstado + "/n" +
+		return "Datos Ambulancia " + this.sIdAmbulancia + "\n" + 
+			   "Estado: " + this.eEstado + "\n" +
 			   "Ciudad " + this.ciudadActual;
 	}
 
@@ -120,7 +119,7 @@ public class Ambulancia implements Comparable<Ambulancia> {
 		String primerMatricula = this.sIdAmbulancia;
 		String segundaMatricula = other.sIdAmbulancia;
 
-		return (primerMatricula).compareTo(segundaMatricula) * -1;
+		return (primerMatricula).compareTo(segundaMatricula);
 	}
 
 }

@@ -11,6 +11,6 @@ public class AmbulanciaComparatorById implements Comparator<Object> {
 		Ambulancia unaAmbulancia = (Ambulancia) ambulanciaUno;
 		Ambulancia otraAmbulancia = (Ambulancia) ambulanciaDos;
 
-		return unaAmbulancia.compareTo(otraAmbulancia);
+		return unaAmbulancia.getsIdAmbulancia().compareTo(otraAmbulancia.getsIdAmbulancia());
 	}
 }

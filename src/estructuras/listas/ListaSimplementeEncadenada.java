@@ -1,9 +1,10 @@
 package estructuras.listas;
 
 import java.util.Iterator;
+
 import estructuras.comunes.*;
 
-public class ListaSimplementeEncadenada extends MetodosComunes implements ILista {
+public class ListaSimplementeEncadenada implements ILista /*extends MetodosComunes*/{
 
     
     private NodoLista inicio;
@@ -166,6 +167,30 @@ public class ListaSimplementeEncadenada extends MetodosComunes implements ILista
 	@Override
     public Iterator iterator() {
         return new IteratorNodoListas(inicio);
+    }
+	
+	@Override
+	public boolean esVacia(){
+		if (this.inicio == null)
+			return true;
+		else
+			return false;
+	}
+
+	public boolean pertenece(Object elemento) {
+        return perteneceAuxiliar(elemento, inicio);
+    }
+
+    public boolean perteneceAuxiliar(Object elemento, NodoLista nodo) {
+        if (nodo == null) {
+            return false;
+        } else {
+            if (nodo.getDato().equals(elemento)) {
+                return true;
+            } else {
+                return perteneceAuxiliar(elemento, nodo.getSiguiente());
+            }
+        }
     }
     
 

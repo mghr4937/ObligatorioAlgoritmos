@@ -14,7 +14,7 @@ public class SistemaImpl implements ISistema {
 	private ListaOrdenada listaAmbulancias;
 	private ListaOrdenada listaCiudades;
 	private ICola listaEmergencias;
-	private ILista listaViajes;
+	private ILista listaViajes;	
 
 	// va a venir por parametros en el juego de pruebas, cuando se inicie el
 	// sistema se debe setear
@@ -31,7 +31,7 @@ public class SistemaImpl implements ISistema {
 	public SistemaImpl() {
 		this.listaAmbulancias = new ListaOrdenada(
 				new AmbulanciaComparatorById());
-		this.listaCiudades = new ListaOrdenada(new CiudadComparatorByName());
+		this.listaCiudades = new ListaOrdenada(new CiudadComparatorById());
 		this.listaEmergencias = new ColaImpl();
 		this.listaViajes = new ListaSimplementeEncadenada();
 	}
@@ -43,6 +43,7 @@ public class SistemaImpl implements ISistema {
 			System.out.println("La cantidad de ciudades es inferior a 1");
 			return TipoRet.ERROR1;
 		}
+		this.setCantCiudad(cantidadCiudades);
 		return TipoRet.OK;
 	}
 
@@ -71,7 +72,7 @@ public class SistemaImpl implements ISistema {
 						.println("Ya existe una ambulancia con identificador ambulanciaID");
 				return TipoRet.ERROR2;
 			}
-			listaAmbulancias.insertarAlFinal(nuevaAmbulancia);
+			listaAmbulancias.insertarOrdenado(nuevaAmbulancia);
 		} else {
 			System.out.println("La ciudad ciudadID no existe");
 			return TipoRet.ERROR1;
@@ -117,30 +118,34 @@ public class SistemaImpl implements ISistema {
 				System.out
 						.println("La ambulancia ambulanciaID ya está habilitada");
 				return TipoRet.ERROR2;
+			} else {
+				ambulanciaHabilitar.seteEstado(EstadoAmbulancia.DISPONIBLE);
+				return TipoRet.OK;
 			}
 		} else {
 			System.out
 					.println("No existe una ambulancia con identificador ambulanciaID");
 			return TipoRet.ERROR1;
 		}
-		return TipoRet.NO_IMPLEMENTADA;
 	}
 
 	@Override
 	public TipoRet eliminarAmbulancia(String ambulanciaID) {
 		Ambulancia aux = this.getAmbulancia(ambulanciaID);
-	if (aux != null) {
-		if(!aux.geteEstado().equals(EstadoAmbulancia.ASIGNADA)){
-			this.listaAmbulancias.borrarElemento(aux);
-			return TipoRet.OK;
-		}else{
-			System.out.println("No es posible deshabilitar la ambulancia ambulanciaID”.");
-			return TipoRet.ERROR2;
+		if (aux != null) {
+			if (!aux.geteEstado().equals(EstadoAmbulancia.ASIGNADA)) {
+				this.listaAmbulancias.borrarElemento(aux);
+				return TipoRet.OK;
+			} else {
+				System.out
+						.println("No es posible deshabilitar la ambulancia ambulanciaID");
+				return TipoRet.ERROR2;
+			}
+		} else {
+			System.out
+					.println("No existe una ambulancia con identificador ambulanciaID");
+			return TipoRet.ERROR1;
 		}
-	} else {
-		System.out.println("No existe una ambulancia con identificador ambulanciaID");
-		return TipoRet.ERROR1;
-	}		
 	}
 
 	@Override
@@ -154,6 +159,7 @@ public class SistemaImpl implements ISistema {
 			int cantEmergencias = getCantEmergenciasPorAmbulancia(ambulanciaID);
 
 			System.out.println("#Emergencias: " + cantEmergencias);
+			System.out.println("");
 		} else {
 			System.out
 					.println("No existe una ambulancia con identificador ambulanciaID");
@@ -176,6 +182,8 @@ public class SistemaImpl implements ISistema {
 				System.out.println(ambulancia.getsIdAmbulancia() + " - "
 						+ ambulancia.geteEstado() + " - "
 						+ ambulancia.getCiudadActual());
+
+				aux = aux.getSiguiente();
 			}
 		}
 		return TipoRet.OK;
@@ -184,29 +192,32 @@ public class SistemaImpl implements ISistema {
 	@Override
 	public TipoRet informeAmbulancia(int ciudadID) {
 		Ciudad ciudad = this.getCiudad(ciudadID);
-		int contador = 0; int disponibles = 0; 
-		if (ciudad != null){
-			NodoLista aux = (NodoLista) this.listaAmbulancias.ObtenerElementoPrimero();
+		int contador = 0;
+		int disponibles = 0;
+		if (ciudad != null) {
+			NodoLista aux = (NodoLista) this.listaAmbulancias
+					.ObtenerElementoPrimero();
 			Ambulancia ambulanciaBuscada;
 			System.out.println("Informe de ambulancias: " + ciudad.toString());
 			while (aux != null) {
 				ambulanciaBuscada = (Ambulancia) aux.getDato();
-				if (ambulanciaBuscada.getCiudadActual().equals(ciudad)){					
+				if (ambulanciaBuscada.getCiudadActual().equals(ciudad)) {
 					contador++;
-					if(ambulanciaBuscada.geteEstado().equals(EstadoAmbulancia.DISPONIBLE)){
-						System.out.println(ambulanciaBuscada.getsIdAmbulancia());
+					if (ambulanciaBuscada.geteEstado().equals(
+							EstadoAmbulancia.DISPONIBLE)) {
+						System.out
+								.println(ambulanciaBuscada.getsIdAmbulancia());
 						disponibles++;
 					}
-				}else{
-					aux = aux.getSiguiente();
-				}					
+				}
+				aux = aux.getSiguiente();
 			}
 			System.out.println("Total Ambulancias disponibles: " + disponibles);
 			return TipoRet.OK;
-		}else{
+		} else {
 			System.out.println("La ciudad ciudadID no existe");
 			return TipoRet.ERROR1;
-		}	
+		}
 	}
 
 	// Precondición: Sólo se agendarán emergencias a ciudades que estén
@@ -224,17 +235,13 @@ public class SistemaImpl implements ISistema {
 					ambulancia.setCiudadActual(ciudad);
 					ambulancia.seteEstado(EstadoAmbulancia.ASIGNADA);
 
-					NodoCola primerElemento = (NodoCola) listaEmergencias
-							.inicio();
-					Emergencia laEmergencia = (Emergencia) primerElemento
-							.getDato();
-					laEmergencia.setCiudadEmergencia(ciudad);
-					laEmergencia.setsAmbulanciaId(ambulanciaID);
-					cambiarUbicacion(ambulanciaID, ciudadID);
-					this.listaEmergencias.desEncolar();
+					Emergencia nuevaEmergencia = new Emergencia(ciudad,
+							ambulanciaID);
+					this.listaEmergencias.enColar(nuevaEmergencia);
 
+					cambiarUbicacion(ambulanciaID, ciudadID);
 				} else {
-					System.out.println("La ambulancia ya fue asignada");
+					System.out.println("La ambulancia no está disponible");
 					return TipoRet.ERROR3;
 				}
 			} else {
@@ -258,7 +265,9 @@ public class SistemaImpl implements ISistema {
 				ambulancia.setCiudadActual(this.getCiudad(ciudadID));
 				return TipoRet.OK;
 			} else {
-				System.out.println("No existe una ambulancia con identificador " + ambulanciaID);
+				System.out
+						.println("No existe una ambulancia con identificador "
+								+ ambulanciaID);
 				return TipoRet.ERROR2;
 			}
 		} else {
@@ -269,20 +278,21 @@ public class SistemaImpl implements ISistema {
 
 	@Override
 	public TipoRet agregarCiudad(String ciudadNombre) {
-			if (this.verificarCiudadNomnbre(ciudadNombre)) {
-		if (this.getCantCiudad() > this.getCantCiudad()) {
-			Ciudad aux = new Ciudad(ciudadNombre);
-			this.listaCiudades.insertarOrdenado(aux);;
-			return TipoRet.OK;
-		} else {
+		if (this.getCantCiudad() < this.listaCiudades.largo()) {
 			System.out
-			.println("No se puede ingresar la ciudadNombre al sistema por no tener mas capacidad");
-			return TipoRet.ERROR2;
+					.println("No se puede ingresar la ciudadNombre al sistema por no tener mas capacidad");
+			return TipoRet.ERROR1;
+		} else {
+			Ciudad nuevaCiudad = new Ciudad(ciudadNombre);
+			if (this.listaCiudades.pertenece(nuevaCiudad)) {
+				System.out
+						.println("Ya existe una ciudad con el nombre Ingresado");
+				return TipoRet.ERROR2;
+			} else {
+				this.listaCiudades.insertarOrdenado(nuevaCiudad);
+				return TipoRet.OK;
+			}
 		}
-	} else {
-		System.out.println("Ya existe una ciudad con el nombre Ingresado");
-		return TipoRet.ERROR1;
-	}
 	}
 
 	@Override
@@ -296,6 +306,7 @@ public class SistemaImpl implements ISistema {
 			while (aux != null) {
 				Ciudad ciudad = (Ciudad) aux.getDato();
 				System.out.println(ciudad.toString());
+				aux = aux.getSiguiente();
 			}
 		}
 		return TipoRet.OK;
@@ -335,23 +346,23 @@ public class SistemaImpl implements ISistema {
 			ciudadDestinoObject.getListaRutas().insertarAlFinal(
 					nuevaRutaOrigenDestino);
 			ciudadDestinoObject.getListaRutas().insertarAlFinal(
-					nuevaRutaOrigenDestino);
+					nuevaRutaCaminoInvertido);
 			return TipoRet.OK;
 		}
 	}
 
+	// Precondicion: Las ciudades deben ser limitrofes para setear su conexion
+	// en minutos desde este metodo
 	@Override
-	public TipoRet modificarDemora(int ciudadOrigen, int ciudadDestino,
-			int minutosViaje) {
+	public TipoRet modificarDemora(int ciudadOrigen, int ciudadDestino, int minutosViaje) {
 
 		int contadorSeguridad = 0;
 
 		if (minutosViaje <= 0) {
 			System.out.println("La duración del viaje debe ser mayor que 0");
 			return TipoRet.ERROR1;
-		} else {
-
-			Ciudad ciudadOrigenObject = getCiudad(ciudadDestino);
+		} else{
+			Ciudad ciudadOrigenObject = getCiudad(ciudadOrigen);
 			Ciudad ciudadDestinoObject = getCiudad(ciudadDestino);
 
 			if (ciudadOrigenObject == null) {
@@ -364,89 +375,162 @@ public class SistemaImpl implements ISistema {
 				return TipoRet.ERROR3;
 			}
 
-			Viaje elViaje = getViaje(ciudadOrigen, ciudadDestino);
-			NodoLista aux = this.listaViajes.ObtenerElementoPrimero();
-
-			/*
-			 * Se implementa un contador para ciudad la integridad de los datos.
-			 * Si modifica un viaje, DEBE modificar dos. Por eso solo retorna ok
-			 * si este contador = 2
-			 */
-
-			while (aux != null) {
-				Viaje iteradorViaje = (Viaje) aux.getDato();
-				if (elViaje.equals(iteradorViaje)) {
-					elViaje.setDemoraMinutos(minutosViaje);
-					contadorSeguridad++;
-				}
-				aux.getSiguiente();
+			Ruta laRutaOrigenDestino = getRuta(ciudadOrigenObject, ciudadDestinoObject);
+			if (laRutaOrigenDestino != null) {
+				laRutaOrigenDestino.setiMinutosViaje(minutosViaje);
+				System.out.println(laRutaOrigenDestino.toString());
+				contadorSeguridad++;
 			}
-			if (contadorSeguridad == 2) {
+
+			Ruta laRutaDestinoOrigen = getRuta(ciudadDestinoObject, ciudadOrigenObject);
+			if (laRutaOrigenDestino != null) {
+				laRutaDestinoOrigen.setiMinutosViaje(minutosViaje);
+				System.out.println(laRutaDestinoOrigen.toString());
+				contadorSeguridad++;
+			}
+			if (contadorSeguridad == 2){
+				System.out.println("ContadorSeguridad " + contadorSeguridad);
 				return TipoRet.OK;
-			} else {
-				return TipoRet.ERROR4;
 			}
 		}
+		System.out.println("Error inesperado");
+		return TipoRet.ERROR4;
 	}
 
 	@Override
 	public TipoRet ambulanciaMasCercana(int ciudadID) {
 
 		Ciudad ciudad = getCiudad(ciudadID);
-
+		
 		if (ciudad != null) {
-			Ambulancia ambulanciaMasCercana;
 			NodoLista auxAmbulancia = listaAmbulancias.ObtenerElementoPrimero();
-
+			Ambulancia ambulanciaEvaluada = null;
 			while (auxAmbulancia != null) {
-				ambulanciaMasCercana = (Ambulancia) auxAmbulancia.getDato();
+				ambulanciaEvaluada = (Ambulancia) auxAmbulancia.getDato();
 
-				if (ambulanciaMasCercana.getCiudadActual().equals(ciudad)) {
-					mostrarDatosAmbulanciaMasCercana(ambulanciaMasCercana, ciudad, 0);
+				if (ambulanciaEvaluada.getCiudadActual().equals(ciudad)) {
+					mostrarDatosAmbulanciaMasCercana(ambulanciaEvaluada,ciudad, ciudad, 0);
 					return TipoRet.OK;
 				}
-				auxAmbulancia.getSiguiente();
+				auxAmbulancia = auxAmbulancia.getSiguiente();
 			}
 
 			// Si no hay ninguna ambulancia en la ciudad, empiezo a buscar la mas cercana en ciudades limitrofes.
-			Viaje viaje;
-			NodoLista auxViaje = listaViajes.ObtenerElementoPrimero();
-			int minutosDemora = -1;
-			int contador = 0;
-
-			while (auxViaje != null) {
-				viaje = (Viaje) auxViaje.getDato();
-
-				if (viaje.getCiudadDestino().equals(ciudad) && viaje.getDemoraMinutos() < minutosDemora) {
-					ambulanciaMasCercana = (Ambulancia) viaje.getAmbulancia();
-					minutosDemora = viaje.getDemoraMinutos();
-					contador++;
-					if(listaViajes.largo() == contador){
-						mostrarDatosAmbulanciaMasCercana(ambulanciaMasCercana, ciudad, minutosDemora);
+			
+			NodoLista nodoRuta = ciudad.getListaRutas().ObtenerElementoPrimero();
+			ILista listaTemporalRutas = new ListaSimplementeEncadenada();
+			Ambulancia ambulanciaMasCercana = null;
+			
+			while(ambulanciaMasCercana == null){
+				while(nodoRuta != null){
+					Ruta auxRuta = (Ruta) nodoRuta.getDato();
+					if (auxRuta.getCiudadOrigen().equals(ciudad)){
+						listaTemporalRutas.insertarAlFinal(auxRuta);
 					}
+					nodoRuta = nodoRuta.getSiguiente();
 				}
-				auxViaje = auxViaje.getSiguiente();
+				
+				NodoLista auxListaTemp = listaTemporalRutas.ObtenerElementoPrimero();
+				Ruta rutaEvaluada = new Ruta();
+				int menorDistancia = 9999999;
+				Ciudad ciudadEnLaQuePuedeHaberAmbulancia = new Ciudad();
+				while(auxListaTemp != null){
+					 rutaEvaluada = (Ruta) auxListaTemp.getDato();
+					if(rutaEvaluada.getiMinutosViaje() < menorDistancia){
+						menorDistancia = rutaEvaluada.getiMinutosViaje();
+						ciudadEnLaQuePuedeHaberAmbulancia = rutaEvaluada.getCiudadDestino();
+					}
+					auxListaTemp = auxListaTemp.getSiguiente();
+				}
+				
+				ILista listaAmbulanciasCompararIds = new ListaOrdenada(new AmbulanciaComparatorById());
+				NodoLista ambulanciasDeCiudadLimitrofe = this.listaAmbulancias.ObtenerElementoPrimero();
+				while(ambulanciasDeCiudadLimitrofe != null){
+					Ambulancia ambulanciaConsiderada = (Ambulancia) ambulanciasDeCiudadLimitrofe.getDato();
+					if(ambulanciaConsiderada.getCiudadActual().equals(ciudadEnLaQuePuedeHaberAmbulancia)){
+						listaAmbulanciasCompararIds.insertarOrdenado(ambulanciaConsiderada);
+					}
+					ambulanciasDeCiudadLimitrofe = ambulanciasDeCiudadLimitrofe.getSiguiente();
+				}
+			ambulanciaMasCercana = (Ambulancia) listaAmbulanciasCompararIds.ObtenerElementoPrimero().getDato();
+			mostrarDatosAmbulanciaMasCercana(ambulanciaMasCercana,ciudad, ciudadEnLaQuePuedeHaberAmbulancia, rutaEvaluada.getiMinutosViaje());
 			}
-		} else {
+			return TipoRet.OK;
+			} else {
 			System.out.println("La ciudad ciudadID no existe");
 			return TipoRet.ERROR1;
 		}
-		return TipoRet.OK;
-	}
-	
-	private void mostrarDatosAmbulanciaMasCercana(Ambulancia ambulancia, Ciudad ciudad, int demora){
-		System.out.println("Ambulancia más cercana a: "
-				+ ambulancia.getCiudadActual().toString());
-				System.out.println("Ambulancia: " + ambulancia.getsIdAmbulancia());
-				System.out.println("Demora del viaje: " + demora);
 	}
 
+
+	private void mostrarDatosAmbulanciaMasCercana(Ambulancia ambulancia,Ciudad ciudadIndicada, Ciudad ciudadAmbulancia, int demora) {
+		System.out.println("La ambulancia más cercana a " + ciudadIndicada + " se encuentra en "
+				+ ambulancia.getCiudadActual().toString());
+		System.out.println("Matrícula: " + ambulancia.getsIdAmbulancia());
+		System.out.println("Demora del viaje: " + demora + " minutos");
+	}
+
+	private void inicilizarVectores(boolean [] visitadas, int []distancia, String [ ]previo){
+		for( int i = 0 ; i <= this.getCantCiudad() ; ++i ){
+	        distancia[ i ] = 999999; 
+	        visitadas[ i ] = false; 
+	        previo[ i ] = null;      
+	    }
+	}	
+	
 	@Override
 	public TipoRet rutaMasRapida(int ciudadOrigen, int ciudadDestino) {
-		// TODO Auto-generated method stub
-		return TipoRet.NO_IMPLEMENTADA;
+		boolean [] visitadas  = new boolean[this.getCantCiudad()];
+		int [] distancia  = new int[99];
+		String [] previo = new String [99];				
+		ColaImpl colaPrioridad = new ColaImpl();
+		this.inicilizarVectores(visitadas, distancia, previo);
+		int actual;
+		int adyacente;
+		int peso;
+		int ciudadCosto [] = {ciudadOrigen, 0};
+		NodoCola nodoCola = new NodoCola(ciudadCosto);
+		colaPrioridad.enColar(nodoCola);
+		distancia[ciudadOrigen] = 0;
+		while (!colaPrioridad.esVacia()) {
+			actual = (int) colaPrioridad.desEncolar().getDato();
+			Ciudad ciudadActual = this.getCiudad(actual);
+			if (visitadas[actual] == false) {
+				visitadas[actual] = true;
+				NodoLista nodoLista = ciudadActual.getListaRutas().ObtenerElementoPrimero();
+				while (nodoLista != null) {
+					Ruta rutaAux = (Ruta) nodoLista.getDato();
+					adyacente = rutaAux.getCiudadDestino().getiCiudadId();
+					peso = rutaAux.getiMinutosViaje();
+					if (visitadas[adyacente] == false) {
+						if (distancia[actual] + peso < distancia[adyacente]) {
+							distancia[adyacente] = distancia[actual] + peso;
+							//int ciudadCostoAct[] = {actual, distancia[actual]};
+							previo[adyacente] = actual + "-" + distancia[actual] ;
+							int ciudadCostoAdy[] = { adyacente,	distancia[adyacente] };
+							colaPrioridad.enColar(new NodoCola(ciudadCostoAdy));
+						}
+					}
+					nodoLista = nodoLista.getSiguiente();
+				}
+			}
+		}
+		System.out.println("Ruta más rápida:");		
+	    imprimirRuta(ciudadDestino, previo);	    
+		return TipoRet.OK;		
 	}
 
+	private void imprimirRuta( int destino, String previo[] ){
+	    if( previo [ destino ]!=null){    //si aun poseo un vertice previo
+	    	String str =  previo [ destino ];
+	    	int indexSeparador = str.indexOf("-");
+	    	int siguiente = Integer.parseInt(str.substring(0,indexSeparador-1));
+	    	imprimirRuta(siguiente , previo );
+	    }//recursivamente sigo explorando	   
+	    	System.out.printf(previo[destino]);        //terminada la recursion imprimo los vertices recorridos
+	 }
+	
+				
 	@Override
 	public TipoRet informeCiudades() {
 		Ciudad ciudad;
@@ -470,8 +554,6 @@ public class SistemaImpl implements ISistema {
 		}
 		return TipoRet.OK;
 	}
-	
-	
 
 	@Override
 	public TipoRet ciudadesEnRadio(int ciudadID, int duracionViaje) {
@@ -497,42 +579,76 @@ public class SistemaImpl implements ISistema {
 		}else{
 			System.out.println("La ciudad " + ciudadID + " no existe.");
 			return TipoRet.ERROR1;
-		}		
+		}	
 	}
 
-	//Precondición: No existe un chofer de cédula cedula como chofer habilitado para conducir la ambulancia ambulanciaID
+	// Precondición: No existe un chofer de cédula cedula como chofer habilitado
+	// para conducir la ambulancia ambulanciaID
 	@Override
 	public TipoRet registrarChofer(String ambulanciaID, String nombre,
 			String cedula) {
-		
+
 		NodoLista auxAmbulancia = listaAmbulancias.ObtenerElementoPrimero();
 		Ambulancia miAmbulancia = (Ambulancia) auxAmbulancia.getDato();
-		
-		if(miAmbulancia != null){
-		Chofer nuevoChofer = new Chofer(cedula, nombre, miAmbulancia);
-		miAmbulancia.getListaChoferes().insertarAlFinal(nuevoChofer);
-		return TipoRet.OK;
-		}else{
-			System.out.println("No existe una ambulancia con identificador ambulanciaID");
+
+		if (miAmbulancia != null) {
+			Chofer nuevoChofer = new Chofer(cedula, nombre, miAmbulancia);
+			miAmbulancia.getListaChoferes().insertarAlFinal(nuevoChofer);
+			return TipoRet.OK;
+		} else {
+			System.out
+					.println("No existe una ambulancia con identificador ambulanciaID");
 			return TipoRet.ERROR1;
 		}
 	}
 
 	@Override
 	public TipoRet eliminarChofer(String ambulanciaID, String cedula) {
-		// TODO Auto-generated method stub
-		return TipoRet.NO_IMPLEMENTADA;
+
+		Ambulancia ambulancia = getAmbulancia(ambulanciaID);
+
+		if (ambulancia != null) {
+			NodoLista auxChofer = ambulancia.getListaChoferes()
+					.ObtenerElementoPrimero();
+
+			while (ambulancia.getListaChoferes() != null) {
+				Chofer chofer = (Chofer) auxChofer.getDato();
+				if (chofer.getsCedula().equals(cedula)) {
+					ambulancia.getListaChoferes().borrarElemento(chofer);
+					return TipoRet.OK;
+				}
+			}
+			auxChofer = auxChofer.getSiguiente();
+		} else {
+			System.out
+					.println("No existe una ambulancia con identificador ambulanciaID");
+			return TipoRet.ERROR1;
+		}
+		System.out
+				.println("El chofer ingresado no está asociado a la ambulancia");
+		return TipoRet.ERROR2;
 	}
 
 	@Override
 	public TipoRet informeChoferes(String ambulanciaID) {
-		// TODO Auto-generated method stub
-		return TipoRet.NO_IMPLEMENTADA;
-	}
 
-	private boolean verificarCiudadNomnbre(String ciudadNombre) {
-		// TODO Auto-generated method stub
-		return false;
+		Ambulancia ambulancia = getAmbulancia(ambulanciaID);
+
+		if (ambulancia != null) {
+
+			NodoLista auxChofer = ambulancia.getListaChoferes()
+					.ObtenerElementoPrimero();
+
+			while (auxChofer != null) {
+				Chofer iteradorChoferes = (Chofer) auxChofer.getDato();
+				System.out.println(iteradorChoferes.toString());
+			}
+		} else {
+			System.out
+					.println("No existe una ambulancia con identificador ambulanciaID");
+			return TipoRet.ERROR1;
+		}
+		return TipoRet.OK;
 	}
 
 	public Ciudad getCiudad(int ciudadID) {
@@ -596,34 +712,21 @@ public class SistemaImpl implements ISistema {
 		return retorno;
 	}
 
-	private Viaje getViaje(int ciudadOrigen, int ciudadDestino) {
+	private Ruta getRuta(Ciudad ciudadOrigenObject, Ciudad ciudadDestinoObject) {
 
-		Ciudad ciudadOrigenObject = getCiudad(ciudadOrigen);
-		Ciudad ciudadDestinoObject = getCiudad(ciudadDestino);
-		Viaje viajeBuscado = new Viaje();
-		viajeBuscado.setCiudadOrigen(ciudadOrigenObject);
-		viajeBuscado.setCiudadDestino(ciudadDestinoObject);
+		NodoLista iteradorRutas = ciudadOrigenObject.getListaRutas().ObtenerElementoPrimero();
 
-		if (this.listaViajes.esVacia())
-			return null;
-		else {
-			NodoLista aux = (NodoLista) this.listaViajes
-					.ObtenerElementoPrimero();
-
-			Viaje iteradorViaje;
-
-			while (aux != null) {
-				iteradorViaje = (Viaje) aux.getDato();
-
-				if (viajeBuscado.equals(iteradorViaje)) {
-					return viajeBuscado;
-				} else
-					aux = aux.getSiguiente();
+		if (iteradorRutas != null) {
+			while (iteradorRutas != null) {
+				Ruta ruta = (Ruta) iteradorRutas.getDato();
+				if (ruta.getCiudadOrigen().equals(ciudadOrigenObject)&& ruta.getCiudadDestino().equals(ciudadDestinoObject)) {
+					return ruta;
+				}
+				iteradorRutas = iteradorRutas.getSiguiente();
 			}
 		}
 		return null;
 	}
-	
 	
 	public ILista getAmbulanciasCiudadEstado(int ciudadID, EstadoAmbulancia estado){
 		ILista ret = new ListaSimplementeEncadenada();
@@ -639,5 +742,70 @@ public class SistemaImpl implements ISistema {
 		return ret;		
 	}
 	
+	//pre-condicion: las ciudades una vez generadas no se pueden eliminar
+	private int[][] GenerarMatrizRutas() {
+		ListaSimplementeEncadenada listaRutas = this.cargarListaRutas();		
+		int largo = this.listaCiudades.largo() - 1;
+		int x = 0;
+		int y = 0;		
+		Ruta ruta = new Ruta();
+		int[][] matriz = new int[largo][largo];
+		//NodoLista nodoRuta = (NodoLista) listaRutas.ObtenerElementoPrimero();
+		while (x <= largo) {
+			while(y <=largo ){
+				ruta.setCiudadOrigen(this.getCiudad(x));
+				ruta.setCiudadDestino(this.getCiudad(y));
+				ruta = (Ruta) listaRutas.buscar(ruta);
+				if (ruta!=null) {					
+					matriz[x][y] = ruta.getiMinutosViaje();
+				} else {
+					matriz[x][y] = 0;
+				}
+				y++;
+			}			
+			x++;
+		}
+		return matriz;
+	}
+	
+	private ListaSimplementeEncadenada cargarListaRutas() {
+		ListaSimplementeEncadenada rutas = new ListaSimplementeEncadenada();
+		NodoLista nodoCiudad = (NodoLista) this.listaCiudades
+				.ObtenerElementoPrimero();
+		NodoLista nodoRuta;
+		Ruta ruta;
+		Ciudad ciudad;
+		while (nodoCiudad != null) {
+			ciudad = (Ciudad) nodoCiudad.getDato();
+			nodoRuta = ciudad.getListaRutas().ObtenerElementoPrimero();
+			while (nodoRuta != null) {
+				ruta = (Ruta) nodoRuta.getDato();
+				if (!rutas.pertenece(ruta)) {
+					rutas.insertarAlPrincipio(nodoRuta);
+				}
+				nodoRuta = nodoRuta.getSiguiente();
+			}
+			nodoCiudad = nodoCiudad.getSiguiente();
+		}
+		return rutas;
+	}
+
+	/*
+	 * private Viaje getViaje(int ciudadOrigen, int ciudadDestino) {
+	 * 
+	 * Ciudad ciudadOrigenObject = getCiudad(ciudadOrigen); Ciudad
+	 * ciudadDestinoObject = getCiudad(ciudadDestino); Viaje viajeBuscado = new
+	 * Viaje();
+	 * 
+	 * if (this.listaViajes.esVacia()) return null; else { NodoLista aux =
+	 * (NodoLista) this.listaViajes.ObtenerElementoPrimero();
+	 * 
+	 * Viaje iteradorViaje;
+	 * 
+	 * while (aux != null) { iteradorViaje = (Viaje) aux.getDato();
+	 * 
+	 * if (viajeBuscado.equals(iteradorViaje)) { return viajeBuscado; } else aux
+	 * = aux.getSiguiente(); } } return null; }
+	 */
 
 }

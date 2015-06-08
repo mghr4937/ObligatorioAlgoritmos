@@ -84,8 +84,8 @@ public class Emergencia {
 
 	@Override
 	public String toString() {
-		return "Emergencia numero " + this.iEmergenciaId + " ocurrio en Ciudad " + this.ciudadEmergencia.getSNombreCiudad()
-				+ "y fue asistida por ambulancia numero" + this.sAmbulanciaId;
+		return "Emergencia numero " + this.iEmergenciaId + " ocurrió en la ciudad de " + this.ciudadEmergencia.getSNombreCiudad()
+				+ " y fue asistida por la ambulancia de matrícula " + this.sAmbulanciaId;
 	}
 	
 	

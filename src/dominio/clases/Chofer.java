@@ -60,7 +60,7 @@ public class Chofer {
 
 	@Override
 	public String toString() {
-		return this.sCedula + " - " + this.sNombre + " conduce la ambulancia " + this.miAmbulancia.getsIdAmbulancia();
+		return "Nombre: " + this.sNombre + ", " + "Cédula " + this.sCedula;
 	}
 		
 }

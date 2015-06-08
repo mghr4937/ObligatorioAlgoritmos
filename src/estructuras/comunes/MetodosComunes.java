@@ -27,7 +27,10 @@ public class MetodosComunes implements IMetodosComunes{
 	}
 	
 	public boolean esVacia(){
-		return (this.nodoObject == null);
+		if (this.inicio == null)
+			return true;
+		else
+			return false;
 	}
 	
 	 //Precondicion: No existen precondiciones

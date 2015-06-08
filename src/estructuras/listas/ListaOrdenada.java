@@ -125,9 +125,9 @@ public class ListaOrdenada implements ILista {
         if (inicio == null || comp.compare(inicio.getDato(), n) >= 0) {
             NodoLista nu = new NodoLista(n, inicio);
             inicio = nu;
-            if (fin == null) {
+            /*if (fin == null) {
                 fin = inicio;
-            }
+            }*/
         } else {
             NodoLista aux = inicio;
             while (aux.getSiguiente() != null && comp.compare(aux.getSiguiente().getDato(), n) < 0) {

@@ -4,8 +4,8 @@ public class Ruta {
 	
 	private Ciudad CiudadOrigen;
 	private Ciudad CiudadDestino;
-	private int iMinutosViaje;	
-		
+	private int iMinutosViaje;
+
 	public Ciudad getCiudadOrigen() {
 		return CiudadOrigen;
 	}
@@ -53,33 +53,21 @@ public class Ruta {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
+	public boolean equals(Object other) {
+		if (!(other instanceof Ruta)) {
 			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Ruta other = (Ruta) obj;
-		if (CiudadDestino == null) {
-			if (other.CiudadDestino != null)
-				return false;
-		} else if (!CiudadDestino.equals(other.CiudadDestino))
-			return false;
-		if (CiudadOrigen == null) {
-			if (other.CiudadOrigen != null)
-				return false;
-		} else if (!CiudadOrigen.equals(other.CiudadOrigen))
-			return false;
-		if (iMinutosViaje != other.iMinutosViaje)
-			return false;
-		return true;
+		}
+		Ruta that = (Ruta) other;
+		return this.CiudadOrigen.equals(that.CiudadOrigen)
+				&& this.CiudadDestino.equals(that.CiudadDestino)
+				|| this.CiudadOrigen.equals(that.CiudadDestino)
+				&& this.CiudadDestino.equals(that.CiudadOrigen);
 	}
 	
 	@Override
 	public String toString() {
-		return "Ciudad Origen:" + this.getCiudadOrigen().getSNombreCiudad() + " - Ciudad Destino:" + 
-						this.getCiudadDestino().getSNombreCiudad() +" - "+ this.getiMinutosViaje()  + "Minutos";
+		return "Ciudad Origen: " + this.getCiudadOrigen().getSNombreCiudad() + " - Ciudad Destino: " + 
+						this.getCiudadDestino().getSNombreCiudad() + " - "+ this.getiMinutosViaje()  + " Minutos";
 	}
 	
 	
