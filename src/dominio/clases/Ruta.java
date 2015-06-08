@@ -58,10 +58,8 @@ public class Ruta {
 			return false;
 		}
 		Ruta that = (Ruta) other;
-		return this.CiudadOrigen.equals(that.CiudadOrigen)
-				&& this.CiudadDestino.equals(that.CiudadDestino)
-				|| this.CiudadOrigen.equals(that.CiudadDestino)
-				&& this.CiudadDestino.equals(that.CiudadOrigen);
+		return this.CiudadOrigen.equals(that.CiudadOrigen) && this.CiudadDestino.equals(that.CiudadDestino)
+			|| this.CiudadOrigen.equals(that.CiudadDestino) && this.CiudadDestino.equals(that.CiudadOrigen);	
 	}
 	
 	@Override

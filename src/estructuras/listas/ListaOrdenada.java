@@ -34,7 +34,7 @@ public class ListaOrdenada implements ILista {
             }
         }
         return contadorLongitud;
-    }
+    } 
     
     //Precondicion: No existen precondiciones
     //Postcondicion: Retorna TRUE si la lista no tiene elementos.

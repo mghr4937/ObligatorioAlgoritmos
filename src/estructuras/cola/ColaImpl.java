@@ -1,6 +1,7 @@
 package estructuras.cola;
 
 import estructuras.comunes.*;
+import estructuras.listas.NodoLista;
 
 public class ColaImpl extends MetodosComunes implements ICola {
 
@@ -71,13 +72,18 @@ public class ColaImpl extends MetodosComunes implements ICola {
 	 * 
 	 * @return elemento ubicado en el frente de la cola
 	 */
-	@Override
+	/*@Override
 	public NodoCola inicio() {
 		if (primero == null)
 			return null;
 		else
 			return (NodoCola) primero.getDato();
-	}
+	}*/
+	
+	  public NodoCola ObtenerElementoPrimero() {
+	        NodoCola primero = this.primero;
+	        return primero;
+	    }
 
 	/**
 	 * Pre.: La cola no es vacía. Pos.: Elimina el elemento ubicado en el frente

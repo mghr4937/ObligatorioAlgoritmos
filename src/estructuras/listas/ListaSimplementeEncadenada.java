@@ -177,21 +177,11 @@ public class ListaSimplementeEncadenada implements ILista /*extends MetodosComun
 			return false;
 	}
 
+	@Override
 	public boolean pertenece(Object elemento) {
-        return perteneceAuxiliar(elemento, inicio);
-    }
-
-    public boolean perteneceAuxiliar(Object elemento, NodoLista nodo) {
-        if (nodo == null) {
-            return false;
-        } else {
-            if (nodo.getDato().equals(elemento)) {
-                return true;
-            } else {
-                return perteneceAuxiliar(elemento, nodo.getSiguiente());
-            }
-        }
-    }
+		// TODO Auto-generated method stub
+		return false;
+	}
     
 
 }

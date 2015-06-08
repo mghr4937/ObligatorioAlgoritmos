@@ -8,7 +8,6 @@ public class Ciudad implements Comparable<Ciudad>{
 	private int iCiudadId;
 	private String sNombreCiudad;
 	private ILista listaRutas;
-
 	private static int numeradora = 0;
 
 	public int getiCiudadId() {
@@ -31,7 +30,7 @@ public class Ciudad implements Comparable<Ciudad>{
 		return numeradora;
 	}
 
-	private static void setNumeradora(int numeradora) {
+	public static void setNumeradora(int numeradora) {
 		Ciudad.numeradora = numeradora;
 	}
 	
@@ -51,8 +50,8 @@ public class Ciudad implements Comparable<Ciudad>{
 		this.NumerarCiudad();
 	}
 	public Ciudad(String sNombreCiudad) {
-		this.sNombreCiudad = sNombreCiudad;		
 		this.NumerarCiudad();
+		this.sNombreCiudad = sNombreCiudad;		
 		this.listaRutas = new ListaSimplementeEncadenada();
 	}
 	
@@ -62,7 +61,7 @@ public class Ciudad implements Comparable<Ciudad>{
 			return false;
 		}
 		Ciudad that = (Ciudad) other;
-		return this.getiCiudadId() == that.getiCiudadId();
+		return this.getSNombreCiudad() == that.getSNombreCiudad();
 	}
 
 	@Override

@@ -8,7 +8,6 @@ public class Ambulancia implements Comparable<Ambulancia> {
 
 	private String sIdAmbulancia;
 	private EstadoAmbulancia eEstado;
-	private boolean bAsignada;
 	private Ciudad ciudadActual;
 	private ILista listaChoferes;
 	
@@ -28,14 +27,6 @@ public class Ambulancia implements Comparable<Ambulancia> {
 
 	public void setsIdAmbulancia(String sIdAmbulancia) {
 		this.sIdAmbulancia = sIdAmbulancia;
-	}
-
-	public boolean isbAsignada() {
-		return bAsignada;
-	}
-
-	public void setbAsignada(boolean bAsignada) {
-		this.bAsignada = bAsignada;
 	}
 
 	public Ciudad getCiudadActual() {
@@ -66,11 +57,13 @@ public class Ambulancia implements Comparable<Ambulancia> {
 		this.listaChoferes = listaChoferes;
 	}
 
+	public Ambulancia(){
+		
+	}
 	public Ambulancia(String sIdAmbulancia, Ciudad ciudadActual,
 			boolean asignada, EstadoAmbulancia estado) {
 		this.sIdAmbulancia = sIdAmbulancia;
 		this.ciudadActual = ciudadActual;
-		this.bAsignada = asignada;
 		this.eEstado = estado;
 		this.listaChoferes = new ListaSimplementeEncadenada();
 	}
@@ -79,11 +72,9 @@ public class Ambulancia implements Comparable<Ambulancia> {
 			boolean asignada) {
 		this.sIdAmbulancia = sIdAmbulancia;
 		this.ciudadActual = ciudadActual;
-		this.bAsignada = asignada;getClass();
 		this.listaChoferes = new ListaSimplementeEncadenada();
 	}
 	
-
 	@Override
 	public boolean equals(Object other) {
 		if (!(other instanceof Ambulancia)) {
@@ -98,10 +89,11 @@ public class Ambulancia implements Comparable<Ambulancia> {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (bAsignada ? 1231 : 1237);
 		result = prime * result
 				+ ((ciudadActual == null) ? 0 : ciudadActual.hashCode());
 		result = prime * result + ((eEstado == null) ? 0 : eEstado.hashCode());
+		result = prime * result
+				+ ((listaChoferes == null) ? 0 : listaChoferes.hashCode());
 		result = prime * result
 				+ ((sIdAmbulancia == null) ? 0 : sIdAmbulancia.hashCode());
 		return result;

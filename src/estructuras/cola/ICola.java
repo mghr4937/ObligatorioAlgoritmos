@@ -4,18 +4,20 @@ import estructuras.comunes.*;
 
 public interface ICola extends IMetodosComunes{
 
-	public void enColar(Object o);
+	void enColar(Object o);
 	
-	public boolean esVacia();
+	boolean esVacia();
 	
-	public boolean estaLlena();
+	boolean estaLlena();
 
-	public Object inicio();
+	//Object inicio();
 
-	public NodoCola desEncolar();
+	NodoCola desEncolar();
 
-	public void vaciar();
+	void vaciar();
 
-	public void mostrar();
+	void mostrar();
+	
+	NodoCola ObtenerElementoPrimero();
 
 }

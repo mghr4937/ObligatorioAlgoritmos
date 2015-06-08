@@ -37,47 +37,47 @@ public class Main {
 		 //sistema.listarCiudades();
 		 
 		//PUNTO 2.3.3 - Agregar Ruta al Mapa
-		 /* Montevideo - Canelones */		sistema.agregarRuta(19, 17, 10);
-		 /* Canelones - Maldonado */		sistema.agregarRuta(17, 15, 10);
-		 /* Maldonado - Rocha */			sistema.agregarRuta(15, 16, 10);
-		 /* Rocha - Treinta y Tres */		sistema.agregarRuta(16, 13, 10);
-		 /* Treinta y Tres - Cerro Largo */	sistema.agregarRuta(13, 12, 10);
-		 /* Cerro Largo - Rivera */			sistema.agregarRuta(12, 11, 10);
-		 /* Montevideo - San Jose */		sistema.agregarRuta(19, 7, 10);
-		 /* San Jose - Flores */			sistema.agregarRuta(7, 8, 10);
-		 /* Flores - Durazno */				sistema.agregarRuta(8, 9, 10);
-		 /* Durazno - Cerro Largo */		sistema.agregarRuta(9, 12, 10);
-		 /* Rivera - Salto */				sistema.agregarRuta(11, 2, 10);
-		 /* Salto - Artigas */				sistema.agregarRuta(2, 1, 10);
-		 /* Canelones - Lavalleja */		sistema.agregarRuta(17, 14, 10);
-		 /* Lavalleja - Treinta y Tres */	sistema.agregarRuta(14,13 , 10);
-		 /* Treinta y Tres - Durazno */		sistema.agregarRuta(13, 9, 10);
-		 /* Canelones - Florida */			sistema.agregarRuta(17, 18, 10);
-		 /* Florida - Durazno */			sistema.agregarRuta(18, 9, 10);
-		 /* Florida - Flores */				sistema.agregarRuta(18, 8, 10);
-		 /* Flores - Soriano */				sistema.agregarRuta(8, 5, 10);
-		 /* Soriano - Rio Negro */			sistema.agregarRuta(5, 4, 10);
-		 /* Rio Negro - Paysandu */			sistema.agregarRuta(4, 3, 10);
-		 /* Paysandu - Salto */				sistema.agregarRuta(3, 2, 10);
-		 /* Salto - Tacuarembo */			sistema.agregarRuta(2, 10, 10);
-		 /* Canelones - San Jose */			sistema.agregarRuta(17, 7, 10);
-		 /* Maldonado - Lavalleja */		sistema.agregarRuta(15, 14, 10);
-		 /* Rocha - Lavalleja */			sistema.agregarRuta(16, 14, 10);
-		 /* Lavalleja - Florida */			sistema.agregarRuta(14, 18, 10);
-		 /* Florida - Treinta y Tres */		sistema.agregarRuta(18, 13, 10);
-		 /* Florida - San Jose */			sistema.agregarRuta(18, 7, 10);
-		 /* San Jose - Colonia */			sistema.agregarRuta(7, 6, 10);
-		 /* San Jose - Soriano */			sistema.agregarRuta(7, 5, 10);
-		 /* Colonia - Soriano */			sistema.agregarRuta(6, 5, 10);
-		 /* Colonia - Flores */				sistema.agregarRuta(6, 8, 10);
-		 /* Rio Negro - Tacuarembo */		sistema.agregarRuta(4, 10, 10);
-		 /* Durazno - Tacuarembo */			sistema.agregarRuta(9, 10, 10);
-		 /* Paysandu - Tacuarembo */		sistema.agregarRuta(3, 10, 10);
-		 /* Rivera - Tacuarembo */			sistema.agregarRuta(11, 10, 10);
-		 /* Tacuarembo - Cerro Largo */		sistema.agregarRuta(10, 12, 10);
+		 /* Montevideo - Canelones */		//sistema.agregarRuta(19, 17, 10);
+		 /* Canelones - Maldonado */		//sistema.agregarRuta(17, 15, 10);
+		 /* Maldonado - Rocha */			//sistema.agregarRuta(15, 16, 10);
+		 /* Rocha - Treinta y Tres */		//sistema.agregarRuta(16, 13, 10);
+		 /* Treinta y Tres - Cerro Largo */	//sistema.agregarRuta(13, 12, 10);
+		 /* Cerro Largo - Rivera */			//sistema.agregarRuta(12, 11, 10);
+		 /* Montevideo - San Jose */		//sistema.agregarRuta(19, 7, 10);
+		 /* San Jose - Flores */			//sistema.agregarRuta(7, 8, 10);
+		 /* Flores - Durazno */				//sistema.agregarRuta(8, 9, 10);
+		 /* Durazno - Cerro Largo */		//sistema.agregarRuta(9, 12, 10);
+		 /* Rivera - Salto */				//sistema.agregarRuta(11, 2, 10);
+		 /* Salto - Artigas */				//sistema.agregarRuta(2, 1, 10);
+		 /* Canelones - Lavalleja */		//sistema.agregarRuta(17, 14, 10);
+		 /* Lavalleja - Treinta y Tres */	//sistema.agregarRuta(14,13 , 10);
+		 /* Treinta y Tres - Durazno */		//sistema.agregarRuta(13, 9, 10);
+		 /* Canelones - Florida */			//sistema.agregarRuta(17, 18, 10);
+		 /* Florida - Durazno */			//sistema.agregarRuta(18, 9, 10);
+		 /* Florida - Flores */				//sistema.agregarRuta(18, 8, 10);
+		 /* Flores - Soriano */				//sistema.agregarRuta(8, 5, 10);
+		 /* Soriano - Rio Negro */			//sistema.agregarRuta(5, 4, 10);
+		 /* Rio Negro - Paysandu */			//sistema.agregarRuta(4, 3, 10);
+		 /* Paysandu - Salto */				//sistema.agregarRuta(3, 2, 10);
+		 /* Salto - Tacuarembo */			//sistema.agregarRuta(2, 10, 10);
+		 /* Canelones - San Jose */			//sistema.agregarRuta(17, 7, 10);
+		 /* Maldonado - Lavalleja */		//sistema.agregarRuta(15, 14, 10);
+		 /* Rocha - Lavalleja */			//sistema.agregarRuta(16, 14, 10);
+		 /* Lavalleja - Florida */			//sistema.agregarRuta(14, 18, 10);
+		 /* Florida - Treinta y Tres */		//sistema.agregarRuta(18, 13, 10);
+		 /* Florida - San Jose */			//sistema.agregarRuta(18, 7, 10);
+		 /* San Jose - Colonia */			//sistema.agregarRuta(7, 6, 10);
+		 /* San Jose - Soriano */			//sistema.agregarRuta(7, 5, 10);
+		 /* Colonia - Soriano */			//sistema.agregarRuta(6, 5, 10);
+		 /* Colonia - Flores */				//sistema.agregarRuta(6, 8, 10);
+		 /* Rio Negro - Tacuarembo */		//sistema.agregarRuta(4, 10, 10);
+		 /* Durazno - Tacuarembo */			//sistema.agregarRuta(9, 10, 10);
+		 /* Paysandu - Tacuarembo */		//sistema.agregarRuta(3, 10, 10);
+		 /* Rivera - Tacuarembo */			//sistema.agregarRuta(11, 10, 10);
+		 /* Tacuarembo - Cerro Largo */		//sistema.agregarRuta(10, 12, 10);
 		 
 		 //PUNTO 2.2.1 - Registrar Ambulancia
-		 //sistema.registrarAmbulancia("SAM 1989", 1);
+		 /*sistema.registrarAmbulancia("SAM 1989", 1);
 		 sistema.registrarAmbulancia("SAM 1990", 2);
 		 sistema.registrarAmbulancia("SAM 1991", 3);
 		 sistema.registrarAmbulancia("SAM 1992", 4);
@@ -95,8 +95,8 @@ public class Main {
 		 sistema.registrarAmbulancia("SAM 2004", 16);
 		 sistema.registrarAmbulancia("SAM 2005", 17);
 		 sistema.registrarAmbulancia("SAM 2006", 18);
-		 sistema.registrarAmbulancia("SAM 2007", 19);
-		 
+		 sistema.registrarAmbulancia("SAM 2007", 19);*/
+		
 		//PUNTO 2.2.2 - Deshabilitar Ambulancia
 		 //sistema.deshabilitarAmbulancia("SAM 1989");
 		 
@@ -155,42 +155,32 @@ public class Main {
 		 sistema.recibirEmergencia("SAM 2006", 17);
 		 sistema.recibirEmergencia("SAM 2007", 18);*/
 //El recibir emergencia llama al cambiarUbicacion, por eso llamo pasandole otra ciudad.
-		 
-		 
-		 /* ANTES DE PROBAR EL MODIFICAR DEMORA, PREGUNTAR POR COMPOSICION DE VIAJE (RUTA + AMBULANCIA) */
-		 /* SI ESA IMPLEMENTACION ES CORRECTA, HACER METODO AUXILIAR AGREGAR VIAJE*/
-		 
+		 		 
 		 //PUNTO 2.3.4 - Modificar demora de viaje
 		 /*sistema.modificarDemora(19, 17, 20);
 		 sistema.modificarDemora(17, 15, 20);
 		 sistema.modificarDemora(15, 16, 20);*/
-		 
-		 
-		 
-		 
-		 
-		 						/************** QUEDE ACÁ **************/
-/* FUNCIONA BIEN SI HAY UNA AMBULANCIA EN LA CIUDAD. PERO SI HAY QUE BUSCAR LA MAS CERCANA EN OTRA CIUDAD NO RETORNA NADA */
-		 
-		 
-		 
-		 
-		 //PUNTO 2.3.5 - Ambulancia más cercana
+
+		 //TEST AMBULANCIA MAS CERCANA
+		 /*sistema.agregarCiudad("Canelones");
+		 sistema.agregarCiudad("Montevideo");
+		 sistema.agregarCiudad("Artigas");
+		 sistema.agregarRuta(1, 2, 60);
+		 sistema.agregarRuta(1, 3, 500);
+		 sistema.registrarAmbulancia("SAM 1989", 2);
 		 sistema.ambulanciaMasCercana(1);
-		 /*sistema.ambulanciaMasCercana(2);
-		 sistema.ambulanciaMasCercana(3);
-		 sistema.ambulanciaMasCercana(4);
-		 sistema.ambulanciaMasCercana(5);*/
 		 
 		 //PUNTO 2.3.6 - Ruta más rápida
 		 
+		 */
 		 //PUNTO 2.3.7 - Informe de Ciudades
+		 sistema.informeCiudades();
 		 
 		 //PUNTO 2.3.8 - Informe de Ciudades en un radio
 		 
-		 
+		 /*
 		 //PUNTO 2.4.1 - Registrar Chofer
-		 /*sistema.registrarChofer("SAM 1989", "Maria", "1.000.001-9");
+		 sistema.registrarChofer("SAM 1989", "Maria", "1.000.001-9");
 		 sistema.registrarChofer("SAM 1989", "Lucia", "1.000.002-9");
 		 sistema.registrarChofer("SAM 1990", "Isabel", "1.000.003-9");
 		 sistema.registrarChofer("SAM 1990", "Claudia", "1.000.004-9");
@@ -228,35 +218,14 @@ public class Main {
 		 sistema.registrarChofer("SAM 2006", "Aldo", "1.000.001-9");
 		 sistema.registrarChofer("SAM 2007", "Leandro", "1.000.001-9");
 		 sistema.registrarChofer("SAM 2007", "Marcelo", "1.000.001-9");
-		 sistema.registrarChofer("SAM 2008", "Mauro", "1.000.001-9");
-		 sistema.registrarChofer("SAM 2008", "Mauricio", "1.000.001-9");
-		 sistema.registrarChofer("SAM 2009", "Roberto", "1.000.001-9");
-		 sistema.registrarChofer("SAM 2009", "Jorge", "1.000.001-9");
-		 sistema.registrarChofer("SAM 2010", "Alejandro", "1.000.001-9");
-		 sistema.registrarChofer("SAM 2010", "Carlos", "1.000.001-9");
-		 sistema.registrarChofer("SAM 2011", "Alejo", "1.000.001-9");
-		 sistema.registrarChofer("SAM 2011", "Ignacio", "1.000.001-9");
-		 sistema.registrarChofer("SAM 2012", "Ricardo", "1.000.001-9");
-		 sistema.registrarChofer("SAM 2012", "Pablo", "1.000.001-9");
-		 sistema.registrarChofer("SAM 2013", "Paulo", "1.000.001-9");
-		 sistema.registrarChofer("SAM 2013", "Gonzalo", "1.000.001-9");
-		 sistema.registrarChofer("SAM 2014", "Martin", "1.000.001-9");
-		 sistema.registrarChofer("SAM 2014", "Santiago", "1.000.001-9");
-		 sistema.registrarChofer("SAM 2015", "Fabio", "1.000.001-9");
-		 sistema.registrarChofer("SAM 2015", "Leslier", "1.000.001-9");
-		 sistema.registrarChofer("SAM 2016", "Joaquin", "1.000.001-9");
-		 sistema.registrarChofer("SAM 2016", "Marcos", "1.000.001-9");
-		 sistema.registrarChofer("SAM 2017", "Pancracio", "1.000.001-9");
-		 sistema.registrarChofer("SAM 2017", "Kleber", "1.000.001-9");
-		 sistema.registrarChofer("SAM 2018", "Rafael", "1.000.001-9");
-		 sistema.registrarChofer("SAM 2018", "Fernando", "1.000.001-9");*/
+		 //sistema.registrarChofer("SAM 2008", "Mauro", "1.000.001-9");
 		 
 		 //PUNTO 2.4.2 - Eliminar Chofer
-		 /*sistema.eliminarChofer("SAM 1989", "1.000.001-9");
-		 sistema.registrarChofer("SAM 1989", "Maria", "1.000.001-9"); //<-- La vuelvo a crear*/
+		 //sistema.eliminarChofer("SAM 1989", "1.000.002-9");
 		 
 		 //PUNTO 2.4.3 - Informe de Choferes Habilitados
-		 //sistema.informeChoferes("SAM 1989");
+		 sistema.informeChoferes("SAM 1989");
+		 */
 	}
 
 }

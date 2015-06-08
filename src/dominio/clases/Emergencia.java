@@ -43,6 +43,9 @@ public class Emergencia {
 		this.iEmergenciaId = ++Emergencia.numeradora;
 	}
 	
+	public Emergencia(){
+		
+	}
 	public Emergencia(Ciudad ciudadEmergencia, String ambulanciaId){
 		NumerarEmergencia();
 		this.ciudadEmergencia = ciudadEmergencia;
@@ -87,10 +90,4 @@ public class Emergencia {
 		return "Emergencia numero " + this.iEmergenciaId + " ocurrió en la ciudad de " + this.ciudadEmergencia.getSNombreCiudad()
 				+ " y fue asistida por la ambulancia de matrícula " + this.sAmbulanciaId;
 	}
-	
-	
-	
-	
-	
-	
 }
