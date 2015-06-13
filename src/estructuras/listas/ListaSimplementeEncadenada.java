@@ -4,7 +4,7 @@ import java.util.Iterator;
 
 import estructuras.comunes.*;
 
-public class ListaSimplementeEncadenada implements ILista /*extends MetodosComunes*/{
+public class ListaSimplementeEncadenada  implements ILista /*extends MetodosComunes*/{
 
     
     private NodoLista inicio;
@@ -177,11 +177,25 @@ public class ListaSimplementeEncadenada implements ILista /*extends MetodosComun
 			return false;
 	}
 
-	@Override
-	public boolean pertenece(Object elemento) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+	
+	 //Precondicion: No existen precondiciones
+   //Postcondicion: Retorna TRUE si el dato pasado como parametro pertenece a la lista
+   public boolean pertenece(Object elemento) {
+       return perteneceAuxiliar(elemento, inicio);
+   }
+
+   private boolean perteneceAuxiliar(Object elemento, NodoLista nodoObject) {
+       if (nodoObject == null) {
+           return false;
+       } else {
+           if (nodoObject.getDato().equals(elemento)) {
+               return true;
+           } else {
+               return perteneceAuxiliar(elemento, nodoObject.getSiguiente());
+           }
+       }
+   }
+
     
 
 }

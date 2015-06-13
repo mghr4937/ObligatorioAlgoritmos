@@ -1,5 +1,7 @@
 package sistema;
 
+import sistema.SistemaImpl.DistanciaCiudad;
+
 public class Main {
 
 	public static void main(String[] args) {
@@ -37,44 +39,49 @@ public class Main {
 		 //sistema.listarCiudades();
 		 
 		//PUNTO 2.3.3 - Agregar Ruta al Mapa
-		 /* Montevideo - Canelones */		//sistema.agregarRuta(19, 17, 10);
-		 /* Canelones - Maldonado */		//sistema.agregarRuta(17, 15, 10);
-		 /* Maldonado - Rocha */			//sistema.agregarRuta(15, 16, 10);
-		 /* Rocha - Treinta y Tres */		//sistema.agregarRuta(16, 13, 10);
-		 /* Treinta y Tres - Cerro Largo */	//sistema.agregarRuta(13, 12, 10);
-		 /* Cerro Largo - Rivera */			//sistema.agregarRuta(12, 11, 10);
-		 /* Montevideo - San Jose */		//sistema.agregarRuta(19, 7, 10);
-		 /* San Jose - Flores */			//sistema.agregarRuta(7, 8, 10);
+		 /* Montevideo - Canelones */		sistema.agregarRuta(19, 17, 2);
+		 sistema.agregarRuta(19, 15, 3);
+		 sistema.agregarRuta(16, 17, 5);
+		 sistema.agregarRuta(16, 14, 4);
+		 /* Canelones - Maldonado */		sistema.agregarRuta(17, 15, 7);
+		 /* Maldonado - Rocha */			sistema.agregarRuta(15, 16, 1);
+		 /* Rocha - Treinta y Tres */		//sistema.agregarRuta(16, 13, 6);
+		 /* Treinta y Tres - Cerro Largo */	//sistema.agregarRuta(13, 12, 6);
+		 /* Cerro Largo - Rivera */			//sistema.agregarRuta(12, 11, 8);
+		 /* Montevideo - San Jose */		//sistema.agregarRuta(19, 7, 12);
+		 /* San Jose - Flores */			//sistema.agregarRuta(7, 8, 13);
 		 /* Flores - Durazno */				//sistema.agregarRuta(8, 9, 10);
 		 /* Durazno - Cerro Largo */		//sistema.agregarRuta(9, 12, 10);
 		 /* Rivera - Salto */				//sistema.agregarRuta(11, 2, 10);
 		 /* Salto - Artigas */				//sistema.agregarRuta(2, 1, 10);
 		 /* Canelones - Lavalleja */		//sistema.agregarRuta(17, 14, 10);
-		 /* Lavalleja - Treinta y Tres */	//sistema.agregarRuta(14,13 , 10);
+		 /* Lavalleja - Treinta y Tres */	//sistema.agregarRuta(14,13 , 13);
 		 /* Treinta y Tres - Durazno */		//sistema.agregarRuta(13, 9, 10);
-		 /* Canelones - Florida */			//sistema.agregarRuta(17, 18, 10);
-		 /* Florida - Durazno */			//sistema.agregarRuta(18, 9, 10);
+		 /* Canelones - Florida */			//sistema.agregarRuta(17, 18, 8);
+		 /* Florida - Durazno */			//sistema.agregarRuta(18, 9, 15);
 		 /* Florida - Flores */				//sistema.agregarRuta(18, 8, 10);
 		 /* Flores - Soriano */				//sistema.agregarRuta(8, 5, 10);
-		 /* Soriano - Rio Negro */			//sistema.agregarRuta(5, 4, 10);
-		 /* Rio Negro - Paysandu */			//sistema.agregarRuta(4, 3, 10);
-		 /* Paysandu - Salto */				//sistema.agregarRuta(3, 2, 10);
-		 /* Salto - Tacuarembo */			//sistema.agregarRuta(2, 10, 10);
-		 /* Canelones - San Jose */			//sistema.agregarRuta(17, 7, 10);
-		 /* Maldonado - Lavalleja */		//sistema.agregarRuta(15, 14, 10);
-		 /* Rocha - Lavalleja */			//sistema.agregarRuta(16, 14, 10);
-		 /* Lavalleja - Florida */			//sistema.agregarRuta(14, 18, 10);
-		 /* Florida - Treinta y Tres */		//sistema.agregarRuta(18, 13, 10);
-		 /* Florida - San Jose */			//sistema.agregarRuta(18, 7, 10);
-		 /* San Jose - Colonia */			//sistema.agregarRuta(7, 6, 10);
-		 /* San Jose - Soriano */			//sistema.agregarRuta(7, 5, 10);
-		 /* Colonia - Soriano */			//sistema.agregarRuta(6, 5, 10);
-		 /* Colonia - Flores */				//sistema.agregarRuta(6, 8, 10);
-		 /* Rio Negro - Tacuarembo */		//sistema.agregarRuta(4, 10, 10);
-		 /* Durazno - Tacuarembo */			//sistema.agregarRuta(9, 10, 10);
-		 /* Paysandu - Tacuarembo */		//sistema.agregarRuta(3, 10, 10);
-		 /* Rivera - Tacuarembo */			//sistema.agregarRuta(11, 10, 10);
-		 /* Tacuarembo - Cerro Largo */		//sistema.agregarRuta(10, 12, 10);
+		 /* Soriano - Rio Negro */			//sistema.agregarRuta(5, 4, 16);
+		 /* Rio Negro - Paysandu */			//sistema.agregarRuta(4, 3, 4);
+		 /* Paysandu - Salto */				//sistema.agregarRuta(3, 2, 6);
+		 /* Salto - Tacuarembo */			//sistema.agregarRuta(2, 10, 4);
+		 /* Canelones - San Jose */			//sistema.agregarRuta(17, 7, 11);
+		 /* Maldonado - Lavalleja */		//sistema.agregarRuta(15, 14, 5);
+		 /* Rocha - Lavalleja */			//sistema.agregarRuta(16, 14, 9);
+		 /* Lavalleja - Florida */			//sistema.agregarRuta(14, 18, 4);		 									
+		 /* Florida - Treinta y Tres */		//sistema.agregarRuta(18, 13, 3);
+		 /* Florida - San Jose */			//sistema.agregarRuta(18, 7, 2);
+		 /* San Jose - Colonia */			//sistema.agregarRuta(7, 6, 11);
+		 /* San Jose - Soriano */			//sistema.agregarRuta(7, 5, 5);
+		 /* Colonia - Soriano */			//sistema.agregarRuta(6, 5, 8);
+		 /* Colonia - Flores */				//sistema.agregarRuta(6, 8, 2);
+		 /* Rio Negro - Tacuarembo */		//sistema.agregarRuta(4, 10, 3);
+		 /* Durazno - Tacuarembo */			//sistema.agregarRuta(9, 10, 16);
+		 /* Paysandu - Tacuarembo */		//sistema.agregarRuta(3, 10, 13);
+		 /* Rivera - Tacuarembo */			//sistema.agregarRuta(11, 10, 18);
+		 /* Tacuarembo - Cerro Largo */		//sistema.agregarRuta(10, 12, 19);
+		 
+		 DistanciaCiudad [][] caminos = sistema.rutasDesdeCiudad(19);
 		 
 		 //PUNTO 2.2.1 - Registrar Ambulancia
 		 /*sistema.registrarAmbulancia("SAM 1989", 1);
@@ -169,12 +176,12 @@ public class Main {
 		 sistema.agregarRuta(1, 3, 500);
 		 sistema.registrarAmbulancia("SAM 1989", 2);
 		 sistema.ambulanciaMasCercana(1);
-		 
+		 */
 		 //PUNTO 2.3.6 - Ruta más rápida
 		 
-		 */
+		 
 		 //PUNTO 2.3.7 - Informe de Ciudades
-		 sistema.informeCiudades();
+		 //sistema.informeCiudades();
 		 
 		 //PUNTO 2.3.8 - Informe de Ciudades en un radio
 		 

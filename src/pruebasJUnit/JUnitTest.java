@@ -1,8 +1,8 @@
 package pruebasJUnit;
-import static org.junit.Assert.*;
+//import static org.junit.Assert.*;
 import interfazObligatorio.ISistema.TipoRet;
 
-import org.junit.Test;
+//import org.junit.Test;
 
 import dominio.clases.Ambulancia.EstadoAmbulancia;
 import sistema.SistemaImpl;
@@ -531,7 +531,7 @@ public class JUnitTest {
 		System.out.println("Retorno testAmbulanciaMasCercana_CiudadLimitrofe:");
 		assertEquals(s.ambulanciaMasCercana(2), TipoRet.OK);
 		System.out.println();
-	}*/
+	}
 	
 	@Test
 	public void testAmbulanciaMasCercana_NO_CiudadLimitrofe() {

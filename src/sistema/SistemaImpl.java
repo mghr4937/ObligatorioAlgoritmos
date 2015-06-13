@@ -340,14 +340,10 @@ public class SistemaImpl implements ISistema {
 
 			// En la ciudad1 --> de A a B y de B a A
 			// En la ciudad2 --> de A a B y de B a A
-			ciudadOrigenObject.getListaRutas().insertarAlFinal(
-					nuevaRutaOrigenDestino);
-			ciudadOrigenObject.getListaRutas().insertarAlFinal(
-					nuevaRutaCaminoInvertido);
-			ciudadDestinoObject.getListaRutas().insertarAlFinal(
-					nuevaRutaOrigenDestino);
-			ciudadDestinoObject.getListaRutas().insertarAlFinal(
-					nuevaRutaCaminoInvertido);
+			ciudadOrigenObject.getListaRutas().insertarAlFinal(nuevaRutaOrigenDestino);
+			//ciudadOrigenObject.getListaRutas().insertarAlFinal(nuevaRutaCaminoInvertido);
+			ciudadDestinoObject.getListaRutas().insertarAlFinal(nuevaRutaOrigenDestino);
+			//ciudadDestinoObject.getListaRutas().insertarAlFinal(nuevaRutaCaminoInvertido);
 			return TipoRet.OK;
 		}
 	}
@@ -474,59 +470,69 @@ public class SistemaImpl implements ISistema {
 		System.out.println("Matrícula: " + ambulancia.getsIdAmbulancia());
 		System.out.println("Demora del viaje: " + demora + " minutos");
 	}
-
+	
+	class DistanciaCiudad{
+		int distancia;
+		int idCiudadAnterior;
+		
+		public DistanciaCiudad(int dist, int idCiudAnt){
+			this.distancia = dist;
+			this.idCiudadAnterior = idCiudAnt;
+		}
+		
+		public DistanciaCiudad(){
+			this.distancia = 0;
+		}
+	}
+	
 	@Override
 	public TipoRet rutaMasRapida(int ciudadOrigen, int ciudadDestino) {
-		boolean [] visitadas  = new boolean[this.getCantCiudad()];
-		int [] distancia  = new int[99];
-		String [] previo = new String [99];				
-		ColaImpl colaPrioridad = new ColaImpl();
-		this.inicilizarVectores(visitadas, distancia, previo);
-		int actual;
-		int adyacente;
-		int peso;
-		int ciudadCosto [] = {ciudadOrigen, 0};
-		NodoCola nodoCola = new NodoCola(ciudadCosto);
-		colaPrioridad.enColar(nodoCola);
-		distancia[ciudadOrigen] = 0;
-		while (!colaPrioridad.esVacia()) {
-			actual = (int) colaPrioridad.desEncolar().getDato();
-			Ciudad ciudadActual = this.getCiudad(actual);
-			if (visitadas[actual] == false) {
-				visitadas[actual] = true;
-				NodoLista nodoLista = ciudadActual.getListaRutas().ObtenerElementoPrimero();
-				while (nodoLista != null) {
-					Ruta rutaAux = (Ruta) nodoLista.getDato();
-					adyacente = rutaAux.getCiudadDestino().getiCiudadId();
-					peso = rutaAux.getiMinutosViaje();
-					if (visitadas[adyacente] == false) {
-						if (distancia[actual] + peso < distancia[adyacente]) {
-							distancia[adyacente] = distancia[actual] + peso;
-							//int ciudadCostoAct[] = {actual, distancia[actual]};
-							previo[adyacente] = actual + "-" + distancia[actual] ;
-							int ciudadCostoAdy[] = { adyacente,	distancia[adyacente] };
-							colaPrioridad.enColar(new NodoCola(ciudadCostoAdy));
+		return TipoRet.NO_IMPLEMENTADA;	
+	}
+	
+	
+	public DistanciaCiudad[][] rutasDesdeCiudad(int ciudadOrigen) {
+		int [][] matrizRutas = this.GenerarMatrizRutas();
+		DistanciaCiudad minimo = new DistanciaCiudad(99999, -1) ; // me guardo el nodo de menor costo
+		int min = 999999;
+		int ciudadSig = -1;
+		boolean [] visitadas = new boolean [this.iCantCiudad+1];
+		int ciudadActual = ciudadOrigen;
+		DistanciaCiudad[][] caminos = new DistanciaCiudad[this.iCantCiudad+1][this.iCantCiudad+1];// [x]=idCiudad [y]=paso
+		int[] paso = new int[1]; // [0]=minutos [1]= idCiudad de donde viene
+		DistanciaCiudad distanciaCiudad = new DistanciaCiudad(0, ciudadOrigen);
+		for (int numeroDePaso = 1; numeroDePaso < this.iCantCiudad; numeroDePaso++) {
+			for (int destino = 1; destino < this.iCantCiudad; destino++) {
+				if (matrizRutas[ciudadActual][destino] > 0) {
+					if (visitadas[destino] != true) {
+						visitadas[destino] = true;
+						distanciaCiudad = new DistanciaCiudad();
+						distanciaCiudad.idCiudadAnterior = ciudadActual;						
+						if (numeroDePaso == 1) {//si es el primer paso no hay acumulado
+							distanciaCiudad.distancia = matrizRutas[ciudadActual][destino];
+						} else {
+							distanciaCiudad.distancia = (minimo.distancia + matrizRutas[ciudadActual][destino]);
+						}
+						DistanciaCiudad aux = caminos[destino][numeroDePaso - 1];
+						if (aux == null	|| aux.distancia > distanciaCiudad.distancia) {//comparo con la distancia del paso anterior al mismo destino
+							caminos[destino][numeroDePaso] = distanciaCiudad;	//si es menor la guardo				
+						} else {
+							caminos[destino][numeroDePaso] = aux; // si es mayor me quedo con la anterior
+						}
+						if (min > caminos[destino][numeroDePaso].distancia) {//me quedo con el de menor distancia de ese paso
+							minimo = caminos[destino][numeroDePaso];
+							min = minimo.distancia;
+							ciudadSig = destino;
 						}
 					}
-					nodoLista = nodoLista.getSiguiente();
 				}
 			}
-		}
-		System.out.println("Ruta más rápida:");		
-	    imprimirRuta(ciudadDestino, previo);	    
-		return TipoRet.OK;		
+			ciudadActual = ciudadSig;
+			min = 9999999;
+		}		
+		return caminos;	
 	}
-
-	private void imprimirRuta( int destino, String previo[] ){
-	    if( previo [ destino ]!=null){    //si aun poseo un vertice previo
-	    	String str =  previo [ destino ];
-	    	int indexSeparador = str.indexOf("-");
-	    	int siguiente = Integer.parseInt(str.substring(0,indexSeparador-1));
-	    	imprimirRuta(siguiente , previo );
-	    }//recursivamente sigo explorando	   
-	    	System.out.printf(previo[destino]);        //terminada la recursion imprimo los vertices recorridos
-	 }
-
+		
 	@Override
 	public TipoRet informeCiudades() {
 		Ciudad ciudad;
@@ -818,5 +824,62 @@ public class SistemaImpl implements ISistema {
 	public void volverCeroNumeradoraCiudades() {
 		Ciudad.setNumeradora(0);
 	}
+	
+	
+	//pre-condicion: las ciudades una vez generadas no se pueden eliminar
+	public int[][] GenerarMatrizRutas() {
+		ListaSimplementeEncadenada listaRutas = this.cargarListaRutas();		
+		int largo = this.listaCiudades.largo()+1;
+		int x = 1;
+			
+		//Ruta ruta = new Ruta();
+		int[][] matriz = new int[largo][largo];
+		//NodoLista nodoRuta = (NodoLista) listaRutas.ObtenerElementoPrimero();
+		while (x < largo) {
+			int y = 1;	
+			while (y < largo) {
+				Ruta ruta = new Ruta();
+				ruta.setCiudadOrigen(this.getCiudad(x));
+				ruta.setCiudadDestino(this.getCiudad(y));
+				ruta = (Ruta) listaRutas.buscar(ruta);
+				if (ruta != null) {
+					matriz[x][y] = ruta.getiMinutosViaje();
+					matriz[y][x] = ruta.getiMinutosViaje();
+				} else if (x == y) {
+					matriz[x][y] = 0;
+					matriz[y][x] = 0;
+				} else {
+					matriz[x][y] = -1;
+					matriz[y][x] = -1;
+				}
+				y++;
+			}			
+			x++;
+		}
+		return matriz;
+	}
+	
+	private ListaSimplementeEncadenada cargarListaRutas() {
+		ListaSimplementeEncadenada rutas = new ListaSimplementeEncadenada();
+		NodoLista nodoCiudad = (NodoLista) this.listaCiudades
+				.ObtenerElementoPrimero();
+		NodoLista nodoRuta;
+		Ruta ruta;
+		Ciudad ciudad;
+		while (nodoCiudad != null) {
+			ciudad = (Ciudad) nodoCiudad.getDato();
+			nodoRuta = ciudad.getListaRutas().ObtenerElementoPrimero();
+			while (nodoRuta != null) {
+				ruta = (Ruta) nodoRuta.getDato();
+				if (!rutas.pertenece(ruta)) {
+					rutas.insertarAlPrincipio(ruta);
+				}
+				nodoRuta = nodoRuta.getSiguiente();
+			}
+			nodoCiudad = nodoCiudad.getSiguiente();
+		}
+		return rutas;
+	}
+
 
 }
