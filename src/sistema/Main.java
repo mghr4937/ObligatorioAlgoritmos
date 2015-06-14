@@ -43,6 +43,8 @@ public class Main {
 		 sistema.agregarRuta(19, 15, 3);
 		 sistema.agregarRuta(16, 17, 5);
 		 sistema.agregarRuta(16, 14, 4);
+		 sistema.agregarRuta(18, 14, 4);
+		 sistema.agregarRuta(16, 18, 9);
 		 /* Canelones - Maldonado */		sistema.agregarRuta(17, 15, 7);
 		 /* Maldonado - Rocha */			sistema.agregarRuta(15, 16, 1);
 		 /* Rocha - Treinta y Tres */		//sistema.agregarRuta(16, 13, 6);
@@ -81,7 +83,7 @@ public class Main {
 		 /* Rivera - Tacuarembo */			//sistema.agregarRuta(11, 10, 18);
 		 /* Tacuarembo - Cerro Largo */		//sistema.agregarRuta(10, 12, 19);
 		 
-		 DistanciaCiudad [][] caminos = sistema.rutasDesdeCiudad(19);
+		 sistema.rutaMasRapida(14, 2);
 		 
 		 //PUNTO 2.2.1 - Registrar Ambulancia
 		 /*sistema.registrarAmbulancia("SAM 1989", 1);

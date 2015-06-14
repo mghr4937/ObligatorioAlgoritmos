@@ -474,40 +474,108 @@ public class SistemaImpl implements ISistema {
 	class DistanciaCiudad{
 		int distancia;
 		int idCiudadAnterior;
+		int tramo;
 		
-		public DistanciaCiudad(int dist, int idCiudAnt){
+		public DistanciaCiudad(int dist, int idCiudAnt, int tramo) {
 			this.distancia = dist;
 			this.idCiudadAnterior = idCiudAnt;
+			this.tramo = tramo;
 		}
-		
-		public DistanciaCiudad(){
+
+		public DistanciaCiudad() {
 			this.distancia = 0;
 		}
 	}
 	
 	@Override
 	public TipoRet rutaMasRapida(int ciudadOrigen, int ciudadDestino) {
-		return TipoRet.NO_IMPLEMENTADA;	
+		Ciudad origen = this.getCiudad(ciudadOrigen);
+		Ciudad destino = this.getCiudad(ciudadDestino);
+		if (origen == null) {
+			System.out.println("La ciudad" + ciudadOrigen + " no existe");
+			return TipoRet.ERROR1;
+		} else if (destino == null) {
+			System.out.println("La ciudad" + ciudadDestino + " no existe");
+			return TipoRet.ERROR2;
+		} else if (ciudadOrigen == ciudadDestino) {
+			System.out.println("CiudadOrigen y CiudadDestino deben ser distintas");
+			return TipoRet.ERROR3;
+		}
+		int[][] matrizRutas = this.GenerarMatrizRutas();
+		DistanciaCiudad[][] caminos = this.rutasDesdeCiudad(ciudadOrigen,matrizRutas);
+		if (this.existeRuta(ciudadOrigen, ciudadDestino, caminos) == false) {
+			System.out.println("No hay rutas entre "  + origen.getSNombreCiudad() + " y " + destino.getSNombreCiudad());
+			return TipoRet.ERROR4;
+		} else {
+			System.out.println("Ruta mas rapida:");
+			System.out.println(origen.getSNombreCiudad() + " - " + 0);
+			this.imprimirRutaMinima(ciudadOrigen, ciudadDestino, caminos);	
+			System.out.println("Demora Total Ambulancias: " + this.demoraTotal(caminos, ciudadDestino)); 
+			return TipoRet.OK;
+		}		 
+		//return TipoRet.NO_IMPLEMENTADA;	
+	}
+	
+	private boolean existeRuta(int ciudadOrigen, int ciudadDestino, DistanciaCiudad [][] caminos){
+		DistanciaCiudad distCiudad = null;
+		for(int numeroDePaso = 1; numeroDePaso < this.iCantCiudad; numeroDePaso++){
+			if(caminos[ciudadDestino][numeroDePaso] !=null){
+				distCiudad = caminos[ciudadDestino][numeroDePaso];
+			}				
+		}
+		if(distCiudad != null){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	private int demoraTotal(DistanciaCiudad [][] caminos,int ciudadDestino ){
+		int acumulado = 0;
+		for(int numeroDePaso = 1; numeroDePaso < this.iCantCiudad; numeroDePaso++){
+			if(caminos[ciudadDestino][numeroDePaso] !=null){
+				acumulado = caminos[ciudadDestino][numeroDePaso].distancia;
+			}				
+		}
+		return acumulado;
+	}
+	
+	private void imprimirRutaMinima (int ciudadOrigen, int ciudadDestino, DistanciaCiudad [][] caminos){
+		DistanciaCiudad distCiudad = null;
+		int actual = -1;
+		//ColaImpl retorno = lista;		
+			for(int numeroDePaso = 1; numeroDePaso < this.iCantCiudad; numeroDePaso++){
+				if(caminos[ciudadDestino][numeroDePaso] !=null){
+					distCiudad = caminos[ciudadDestino][numeroDePaso];
+				}				
+			}		
+			if(ciudadDestino != ciudadOrigen){
+				this.imprimirRutaMinima(ciudadOrigen, distCiudad.idCiudadAnterior,  caminos );				
+				Ciudad destino = this.getCiudad(ciudadDestino);
+				System.out.println(destino.getSNombreCiudad() + " - " + (distCiudad.tramo));
+				
+			}
+		//return retorno;
 	}
 	
 	
-	public DistanciaCiudad[][] rutasDesdeCiudad(int ciudadOrigen) {
-		int [][] matrizRutas = this.GenerarMatrizRutas();
-		DistanciaCiudad minimo = new DistanciaCiudad(99999, -1) ; // me guardo el nodo de menor costo
+	public DistanciaCiudad[][] rutasDesdeCiudad(int ciudadOrigen, int [][] matrizRutas ) {		
+		DistanciaCiudad minimo = new DistanciaCiudad(99999, -1, -1) ; // me guardo el nodo de menor costo
 		int min = 999999;
 		int ciudadSig = -1;
 		boolean [] visitadas = new boolean [this.iCantCiudad+1];
 		int ciudadActual = ciudadOrigen;
 		DistanciaCiudad[][] caminos = new DistanciaCiudad[this.iCantCiudad+1][this.iCantCiudad+1];// [x]=idCiudad [y]=paso
-		int[] paso = new int[1]; // [0]=minutos [1]= idCiudad de donde viene
-		DistanciaCiudad distanciaCiudad = new DistanciaCiudad(0, ciudadOrigen);
+		int[] paso = new int[1]; // [0]=minutos [1]= idCiudad de donde viene [2]=costo tramo
+		DistanciaCiudad distanciaCiudad;
 		for (int numeroDePaso = 1; numeroDePaso < this.iCantCiudad; numeroDePaso++) {
 			for (int destino = 1; destino < this.iCantCiudad; destino++) {
 				if (matrizRutas[ciudadActual][destino] > 0) {
 					if (visitadas[destino] != true) {
-						visitadas[destino] = true;
+						visitadas[ciudadActual] = true;
 						distanciaCiudad = new DistanciaCiudad();
-						distanciaCiudad.idCiudadAnterior = ciudadActual;						
+						distanciaCiudad.idCiudadAnterior = ciudadActual;
+						distanciaCiudad.tramo = matrizRutas[ciudadActual][destino];
 						if (numeroDePaso == 1) {//si es el primer paso no hay acumulado
 							distanciaCiudad.distancia = matrizRutas[ciudadActual][destino];
 						} else {
@@ -520,16 +588,18 @@ public class SistemaImpl implements ISistema {
 							caminos[destino][numeroDePaso] = aux; // si es mayor me quedo con la anterior
 						}
 						if (min > caminos[destino][numeroDePaso].distancia) {//me quedo con el de menor distancia de ese paso
+							minimo = new DistanciaCiudad();
 							minimo = caminos[destino][numeroDePaso];
 							min = minimo.distancia;
 							ciudadSig = destino;
 						}
 					}
-				}
+				}				
 			}
-			ciudadActual = ciudadSig;
+			ciudadActual = ciudadSig;			
 			min = 9999999;
 		}		
+
 		return caminos;	
 	}
 		

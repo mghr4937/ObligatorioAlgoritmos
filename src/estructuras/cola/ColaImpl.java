@@ -3,7 +3,7 @@ package estructuras.cola;
 import estructuras.comunes.*;
 import estructuras.listas.NodoLista;
 
-public class ColaImpl extends MetodosComunes implements ICola {
+public class ColaImpl  implements ICola {
 
 	private NodoCola inicio;
 	private NodoCola ultimo;
@@ -124,8 +124,6 @@ public class ColaImpl extends MetodosComunes implements ICola {
 		return retorno;
 	}
 	
-
-
 	@Override
 	public void vaciar() {
 		this.inicio = null;
@@ -139,6 +137,12 @@ public class ColaImpl extends MetodosComunes implements ICola {
 			System.out.println(aux.getDato());
 			aux = aux.getSiguiente();
 		}
+	}
+
+	@Override
+	public boolean pertenece(Object elemento) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }
