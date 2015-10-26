@@ -2,24 +2,24 @@ package dominio.clases;
 
 public class Ruta {
 	
-	private Ciudad CiudadOrigen;
-	private Ciudad CiudadDestino;
+	private Ciudad ciudadOrigen;
+	private Ciudad ciudadDestino;
 	private int iMinutosViaje;
 
 	public Ciudad getCiudadOrigen() {
-		return CiudadOrigen;
+		return ciudadOrigen;
 	}
 
 	public void setCiudadOrigen(Ciudad ciudadOrigen) {
-		CiudadOrigen = ciudadOrigen;
+		this.ciudadOrigen = ciudadOrigen;
 	}
 
 	public Ciudad getCiudadDestino() {
-		return CiudadDestino;
+		return ciudadDestino;
 	}
 
 	public void setCiudadDestino(Ciudad ciudadDestino) {
-		CiudadDestino = ciudadDestino;
+		this.ciudadDestino = ciudadDestino;
 	}
 
 	public int getiMinutosViaje() {
@@ -35,8 +35,8 @@ public class Ruta {
 	}
 	
 	public Ruta(Ciudad CiudadOrigen, Ciudad CiudadDestino, int iMinutosViaje) {
-		this.CiudadOrigen = CiudadOrigen;
-		this.CiudadDestino = CiudadDestino;
+		this.ciudadOrigen = CiudadOrigen;
+		this.ciudadDestino = CiudadDestino;
 		this.iMinutosViaje = iMinutosViaje;
 	}
 	
@@ -45,9 +45,9 @@ public class Ruta {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
-				+ ((CiudadDestino == null) ? 0 : CiudadDestino.hashCode());
+				+ ((ciudadDestino == null) ? 0 : ciudadDestino.hashCode());
 		result = prime * result
-				+ ((CiudadOrigen == null) ? 0 : CiudadOrigen.hashCode());
+				+ ((ciudadOrigen == null) ? 0 : ciudadOrigen.hashCode());
 		result = prime * result + iMinutosViaje;
 		return result;
 	}
@@ -58,8 +58,8 @@ public class Ruta {
 			return false;
 		}
 		Ruta that = (Ruta) other;
-		return this.CiudadOrigen.equals(that.CiudadOrigen) && this.CiudadDestino.equals(that.CiudadDestino)
-			|| this.CiudadOrigen.equals(that.CiudadDestino) && this.CiudadDestino.equals(that.CiudadOrigen);	
+		return this.ciudadOrigen.equals(that.ciudadOrigen) && this.ciudadDestino.equals(that.ciudadDestino)
+			|| this.ciudadOrigen.equals(that.ciudadDestino) && this.ciudadDestino.equals(that.ciudadOrigen);	
 	}
 	
 	@Override
@@ -67,10 +67,4 @@ public class Ruta {
 		return "Ciudad Origen: " + this.getCiudadOrigen().getSNombreCiudad() + " - Ciudad Destino: " + 
 						this.getCiudadDestino().getSNombreCiudad() + " - "+ this.getiMinutosViaje()  + " Minutos";
 	}
-	
-	
-	
-	
-	
-
 }

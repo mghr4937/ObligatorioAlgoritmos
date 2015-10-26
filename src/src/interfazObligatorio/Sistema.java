@@ -1,9 +1,9 @@
 package interfazObligatorio;
 
-public interface ISistema {
+public interface Sistema {
 
 	public enum TipoRet {
-		OK, NO_IMPLEMENTADA, ERROR1, ERROR2, ERROR3, ERROR4, ERROR5
+		OK, NO_IMPLEMENTADA,ERROR, ERROR1, ERROR2, ERROR3, ERROR4, ERROR5
 	};
 
 	public TipoRet eliminarAmbulancia(String ambulanciaID);

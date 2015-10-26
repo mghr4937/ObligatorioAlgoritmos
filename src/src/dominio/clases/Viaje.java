@@ -22,7 +22,6 @@ public class Viaje {
 	}
 
 	public Viaje() {
-
 	}
 
 	public Viaje(Ambulancia laAmbulancia, Ruta ruta) {
@@ -58,5 +57,4 @@ public class Viaje {
 				+ ", ambulancia matrícula "
 				+ this.ambulancia.getsIdAmbulancia();
 	}
-
 }

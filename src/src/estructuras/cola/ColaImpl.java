@@ -3,18 +3,18 @@ package estructuras.cola;
 import estructuras.comunes.*;
 import estructuras.listas.NodoLista;
 
-public class ColaImpl  implements ICola {
+public class ColaImpl extends MetodosComunes implements ICola {
 
-	private NodoCola inicio;
+	private NodoCola primero;
 	private NodoCola ultimo;
 	private int tamanio;
 
 	public NodoCola getPrimero() {
-		return inicio;
+		return primero;
 	}
 
 	public void setPrimero(NodoCola primero) {
-		this.inicio = primero;
+		this.primero = primero;
 	}
 
 	public NodoCola getUltimo() {
@@ -35,7 +35,7 @@ public class ColaImpl  implements ICola {
 
 	public ColaImpl() {
 		super();
-		this.inicio = null;
+		this.primero = null;
 		this.ultimo = null;
 		this.tamanio = 0;
 	}
@@ -49,23 +49,10 @@ public class ColaImpl  implements ICola {
 	@Override
 	public void enColar(Object o) {
 		NodoCola nuevo = new NodoCola(o);
-		if(this.getPrimero() == null){
-			this.setPrimero(nuevo);
-			this.setUltimo(nuevo);
-		}else{
-			this.getUltimo().setSiguiente(nuevo);
-			this.setUltimo(nuevo);	
-		}
-			
+		nuevo.setSiguiente((this.getPrimero()));
+		this.setPrimero(nuevo);
 		this.setTamanio(this.getTamanio() + 1);
 
-	}
-	@Override
-	public boolean esVacia(){
-		if (this.inicio == null)
-			return true;
-		else
-			return false;
 	}
 
 	/**
@@ -94,7 +81,7 @@ public class ColaImpl  implements ICola {
 	}*/
 	
 	  public NodoCola ObtenerElementoPrimero() {
-	        NodoCola primero = this.inicio;
+	        NodoCola primero = this.primero;
 	        return primero;
 	    }
 
@@ -107,12 +94,12 @@ public class ColaImpl  implements ICola {
 		NodoCola retorno = null;
 		if (!this.esVacia()) {
 			retorno = this.ultimo;
-			if (this.inicio == this.ultimo) {
-				this.inicio = null;
+			if (this.primero == this.ultimo) {
+				this.primero = null;
 				this.ultimo = null;
 			} else {
-				NodoCola aux = this.inicio;
-				while (aux.getSiguiente() != null) {
+				NodoCola aux = this.primero;
+				while (aux.getSiguiente().getSiguiente() != null) {
 					aux = aux.getSiguiente();
 				}
 				this.ultimo = aux;
@@ -122,27 +109,21 @@ public class ColaImpl  implements ICola {
 		}
 
 		return retorno;
-	}
-	
+	}	
+
 	@Override
 	public void vaciar() {
-		this.inicio = null;
+		this.primero = null;
 		this.ultimo = null;
 	}
 
 	@Override
 	public void mostrar() {
-		NodoCola aux = this.inicio;
+		NodoCola aux = this.primero;
 		while (aux != null) {
 			System.out.println(aux.getDato());
 			aux = aux.getSiguiente();
 		}
-	}
-
-	@Override
-	public boolean pertenece(Object elemento) {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 }

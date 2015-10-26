@@ -50,7 +50,7 @@ public class ListaOrdenada implements ILista {
         return perteneceAuxiliar(elemento, inicio);
     }
 
-    public boolean perteneceAuxiliar(Object elemento, NodoLista nodo) {
+    private boolean perteneceAuxiliar(Object elemento, NodoLista nodo) {
         if (nodo == null) {
             return false;
         } else {

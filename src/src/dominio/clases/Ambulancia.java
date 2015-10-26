@@ -60,21 +60,20 @@ public class Ambulancia implements Comparable<Ambulancia> {
 	public Ambulancia(){
 		
 	}
+	public Ambulancia(String sIdAmbulancia, Ciudad ciudadActual) {
+		this.sIdAmbulancia = sIdAmbulancia;
+		this.ciudadActual = ciudadActual;
+		this.listaChoferes = new ListaSimplementeEncadenada();
+	}
 	public Ambulancia(String sIdAmbulancia, Ciudad ciudadActual,
-			boolean asignada, EstadoAmbulancia estado) {
+			EstadoAmbulancia estado) {
 		this.sIdAmbulancia = sIdAmbulancia;
 		this.ciudadActual = ciudadActual;
 		this.eEstado = estado;
 		this.listaChoferes = new ListaSimplementeEncadenada();
 	}
 	
-	public Ambulancia(String sIdAmbulancia, Ciudad ciudadActual,
-			boolean asignada) {
-		this.sIdAmbulancia = sIdAmbulancia;
-		this.ciudadActual = ciudadActual;
-		this.listaChoferes = new ListaSimplementeEncadenada();
-	}
-	
+
 	@Override
 	public boolean equals(Object other) {
 		if (!(other instanceof Ambulancia)) {

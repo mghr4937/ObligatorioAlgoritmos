@@ -1,25 +1,22 @@
 package pruebasJUnit;
-//import static org.junit.Assert.*;
-import interfazObligatorio.ISistema.TipoRet;
 
-//import org.junit.Test;
-
+import static org.junit.Assert.*;
+import interfazObligatorio.Sistema.TipoRet;
+import org.junit.Test;
 import dominio.clases.Ambulancia.EstadoAmbulancia;
-import sistema.SistemaImpl;
-
+import sistema.SistemaEmergencias;
 
 public class JUnitTest {
 
-	/*
 	@Test
 	public void testCrearSistemaDeEmergencias() {
-		SistemaImpl s = new SistemaImpl();
+		SistemaEmergencias s = new SistemaEmergencias();
 		assertEquals(s.crearSistemaDeEmergencias(19), TipoRet.OK);
 	}
 	
 	@Test
 	public void testCrearSistemaDeEmergenciasFailNumeroCiudades() {
-		SistemaImpl s = new SistemaImpl();
+		SistemaEmergencias s = new SistemaEmergencias();
 		System.out.println();
 		System.out.println("Retorno testCrearSistemaDeEmergenciasFailNumeroCiudades:");
 		assertEquals(s.crearSistemaDeEmergencias(0), TipoRet.ERROR1);
@@ -28,14 +25,14 @@ public class JUnitTest {
 
 	@Test
 	public void testDestruirSistemaEmergencias() {
-		SistemaImpl s = new SistemaImpl();
+		SistemaEmergencias s = new SistemaEmergencias();
 		assertEquals(s.crearSistemaDeEmergencias(19), TipoRet.OK);
 		assertEquals(s.destruirSistemaEmergencias(), TipoRet.OK);
 	}
 
 	@Test
 	public void testRegistrarAmbulancia() {
-		SistemaImpl s = new SistemaImpl();
+		SistemaEmergencias s = new SistemaEmergencias();
 		assertEquals(s.crearSistemaDeEmergencias(2), TipoRet.OK);
 		s.volverCeroNumeradoraCiudades();
 		assertEquals(s.agregarCiudad("Artigas"), TipoRet.OK);
@@ -47,7 +44,7 @@ public class JUnitTest {
 	
 	@Test
 	public void testRegistrarAmbulancia_CiudadNoExiste() {
-		SistemaImpl s = new SistemaImpl();
+		SistemaEmergencias s = new SistemaEmergencias();
 		assertEquals(s.crearSistemaDeEmergencias(1), TipoRet.OK);
 		System.out.println();
 		System.out.println("Retorno testRegistrarAmbulancia_CiudadNoExiste:");
@@ -58,7 +55,7 @@ public class JUnitTest {
 	
 	@Test
 	public void testRegistrarAmbulancia_YaExisteAmbulancia() {
-		SistemaImpl s = new SistemaImpl();
+		SistemaEmergencias s = new SistemaEmergencias();
 		assertEquals(s.crearSistemaDeEmergencias(1), TipoRet.OK);
 		s.volverCeroNumeradoraCiudades();
 		assertEquals(s.agregarCiudad("Artigas"), TipoRet.OK);
@@ -70,7 +67,7 @@ public class JUnitTest {
 
 	@Test
 	public void testDeshabilitarAmbulancia() {
-		SistemaImpl s = new SistemaImpl();
+		SistemaEmergencias s = new SistemaEmergencias();
 		assertEquals(s.crearSistemaDeEmergencias(1), TipoRet.OK);
 		s.volverCeroNumeradoraCiudades();
 		assertEquals(s.agregarCiudad("Artigas"), TipoRet.OK);
@@ -80,7 +77,7 @@ public class JUnitTest {
 
 	@Test
 	public void testDeshabilitarAmbulancia_noExisteAmbulancia() {
-		SistemaImpl s = new SistemaImpl();
+		SistemaEmergencias s = new SistemaEmergencias();
 		assertEquals(s.crearSistemaDeEmergencias(1), TipoRet.OK);
 		s.volverCeroNumeradoraCiudades();
 		assertEquals(s.agregarCiudad("Artigas"), TipoRet.OK);
@@ -93,17 +90,18 @@ public class JUnitTest {
 	
 	@Test
 	public void testHabilitarAmbulancia() {
-		SistemaImpl s = new SistemaImpl();
+		SistemaEmergencias s = new SistemaEmergencias();
 		assertEquals(s.crearSistemaDeEmergencias(1), TipoRet.OK);
 		s.volverCeroNumeradoraCiudades();
 		assertEquals(s.agregarCiudad("Artigas"), TipoRet.OK);
 		assertEquals(s.registrarAmbulancia("SAM 1990", 1), TipoRet.OK);
+		assertEquals(s.deshabilitarAmbulancia("SAM 1990"), TipoRet.OK);
 		assertEquals(s.habilitarAmbulancia("SAM 1990"), TipoRet.OK);
 	}
 
 	@Test
 	public void testHabilitarAmbulancia_AmbulanciaNoExiste() {
-		SistemaImpl s = new SistemaImpl();
+		SistemaEmergencias s = new SistemaEmergencias();
 		assertEquals(s.crearSistemaDeEmergencias(1), TipoRet.OK);
 		System.out.println("Retorno testHabilitarAmbulancia_AmbulanciaNoExiste:");
 		assertEquals(s.habilitarAmbulancia("SAM 1989"), TipoRet.ERROR1);
@@ -112,12 +110,11 @@ public class JUnitTest {
 	
 	@Test
 	public void testHabilitarAmbulancia_AmbulanciaYaHabilitada() {
-		SistemaImpl s = new SistemaImpl();
+		SistemaEmergencias s = new SistemaEmergencias();
 		assertEquals(s.crearSistemaDeEmergencias(1), TipoRet.OK);
 		s.volverCeroNumeradoraCiudades();
 		assertEquals(s.agregarCiudad("Artigas"), TipoRet.OK);
 		assertEquals(s.registrarAmbulancia("SAM 1989", 1), TipoRet.OK);
-		assertEquals(s.habilitarAmbulancia("SAM 1989"), TipoRet.OK);
 		System.out.println("Retorno testHabilitarAmbulanciaAmbulancia_YaHabilitada:");
 		assertEquals(s.habilitarAmbulancia("SAM 1989"), TipoRet.ERROR2);
 		System.out.println();
@@ -125,7 +122,7 @@ public class JUnitTest {
 	
 	@Test
 	public void testEliminarAmbulancia() {
-		SistemaImpl s = new SistemaImpl();
+		SistemaEmergencias s = new SistemaEmergencias();
 		assertEquals(s.crearSistemaDeEmergencias(1), TipoRet.OK);
 		s.volverCeroNumeradoraCiudades();
 		assertEquals(s.agregarCiudad("Artigas"), TipoRet.OK);
@@ -135,7 +132,7 @@ public class JUnitTest {
 
 	@Test
 	public void testEliminarAmbulancia_AmbulanciaNoExiste() {
-		SistemaImpl s = new SistemaImpl();
+		SistemaEmergencias s = new SistemaEmergencias();
 		assertEquals(s.crearSistemaDeEmergencias(1), TipoRet.OK);
 		s.volverCeroNumeradoraCiudades();
 		assertEquals(s.agregarCiudad("Artigas"), TipoRet.OK);
@@ -146,13 +143,12 @@ public class JUnitTest {
 	
 	@Test
 	public void testEliminarAmbulancia_AmbulanciaAsignadaViaje() {
-		SistemaImpl s = new SistemaImpl();
+		SistemaEmergencias s = new SistemaEmergencias();
 		assertEquals(s.crearSistemaDeEmergencias(2), TipoRet.OK);
 		s.volverCeroNumeradoraCiudades();
 		assertEquals(s.agregarCiudad("Montevideo"), TipoRet.OK);
 		assertEquals(s.agregarCiudad("Canelones"), TipoRet.OK);
 		assertEquals(s.registrarAmbulancia("SAM 1989", 1), TipoRet.OK);
-		assertEquals(s.habilitarAmbulancia("SAM 1989"), TipoRet.OK);
 		assertEquals(s.agregarRuta(1, 2, 10), TipoRet.OK);
 		assertEquals(s.recibirEmergencia("SAM 1989", 2), TipoRet.OK);
 		System.out.println("Retorno testEliminarAmbulancia_AmbulanciaAsignadaViaje:");
@@ -162,7 +158,7 @@ public class JUnitTest {
 	
 	@Test
 	public void testBuscarAmbulancia_SinEmergencias() {
-		SistemaImpl s = new SistemaImpl();
+		SistemaEmergencias s = new SistemaEmergencias();
 		assertEquals(s.crearSistemaDeEmergencias(2), TipoRet.OK);
 		s.volverCeroNumeradoraCiudades();
 		assertEquals(s.agregarCiudad("Montevideo"), TipoRet.OK);
@@ -174,18 +170,14 @@ public class JUnitTest {
 	
 	@Test
 	public void testBuscarAmbulancia_ConEmergencias() {
-		SistemaImpl s = new SistemaImpl();
+		SistemaEmergencias s = new SistemaEmergencias();
 		assertEquals(s.crearSistemaDeEmergencias(3), TipoRet.OK);
 		s.volverCeroNumeradoraCiudades();
 		assertEquals(s.agregarCiudad("Montevideo"), TipoRet.OK);
 		assertEquals(s.agregarCiudad("Canelones"), TipoRet.OK);
 		assertEquals(s.agregarCiudad("Maldonado"), TipoRet.OK);
 		assertEquals(s.registrarAmbulancia("SAM 1989", 1), TipoRet.OK);
-		assertEquals(s.habilitarAmbulancia("SAM 1989"), TipoRet.OK);
 		assertEquals(s.recibirEmergencia("SAM 1989", 2), TipoRet.OK);
-		assertEquals(s.habilitarAmbulancia("SAM 1989"), TipoRet.OK);
-		assertEquals(s.recibirEmergencia("SAM 1989", 3), TipoRet.OK);
-		assertEquals(s.habilitarAmbulancia("SAM 1989"), TipoRet.OK);
 		System.out.println("Retorno testBuscarAmbulancia_ConEmergencias:");
 		assertEquals(s.buscarAmbulancia("SAM 1989"), TipoRet.OK);
 		System.out.println();
@@ -193,7 +185,7 @@ public class JUnitTest {
 
 	@Test
 	public void testBuscarAmbulancia_AmbulanciaNoExiste() {
-		SistemaImpl s = new SistemaImpl();
+		SistemaEmergencias s = new SistemaEmergencias();
 		assertEquals(s.crearSistemaDeEmergencias(2), TipoRet.OK);
 		s.volverCeroNumeradoraCiudades();
 		System.out.println("Retorno testBuscarAmbulancia_AmbulanciaNoExiste:");
@@ -202,24 +194,18 @@ public class JUnitTest {
 	
 	@Test
 	public void testInformeAmbulancia() {
-		SistemaImpl s = new SistemaImpl();
+		SistemaEmergencias s = new SistemaEmergencias();
 		assertEquals(s.crearSistemaDeEmergencias(3), TipoRet.OK);
 		s.volverCeroNumeradoraCiudades();
 		assertEquals(s.agregarCiudad("Montevideo"), TipoRet.OK);
 		assertEquals(s.agregarCiudad("Canelones"), TipoRet.OK);
 		assertEquals(s.agregarCiudad("Maldonado"), TipoRet.OK);
 		assertEquals(s.registrarAmbulancia("SAM 1989", 1), TipoRet.OK);
-		assertEquals(s.habilitarAmbulancia("SAM 1989"), TipoRet.OK);
 		assertEquals(s.registrarAmbulancia("SAM 1990", 1), TipoRet.OK);
-		assertEquals(s.habilitarAmbulancia("SAM 1990"), TipoRet.OK);
 		assertEquals(s.registrarAmbulancia("SAM 1991", 2), TipoRet.OK);
-		assertEquals(s.habilitarAmbulancia("SAM 1991"), TipoRet.OK);
 		assertEquals(s.registrarAmbulancia("SAM 1992", 2), TipoRet.OK);
-		assertEquals(s.habilitarAmbulancia("SAM 1992"), TipoRet.OK);
 		assertEquals(s.registrarAmbulancia("SAM 1993", 3), TipoRet.OK);
-		assertEquals(s.habilitarAmbulancia("SAM 1993"), TipoRet.OK);
 		assertEquals(s.registrarAmbulancia("SAM 1994", 3), TipoRet.OK);
-		assertEquals(s.habilitarAmbulancia("SAM 1994"), TipoRet.OK);
 		System.out.println("Retorno testInformeAmbulancia:");
 		assertEquals(s.informeAmbulancia(), TipoRet.OK);
 		System.out.println();
@@ -227,18 +213,14 @@ public class JUnitTest {
 
 	@Test
 	public void testInformeAmbulanciaByCiudadId() {
-		SistemaImpl s = new SistemaImpl();
+		SistemaEmergencias s = new SistemaEmergencias();
 		assertEquals(s.crearSistemaDeEmergencias(1), TipoRet.OK);
 		s.volverCeroNumeradoraCiudades();
 		assertEquals(s.agregarCiudad("Montevideo"), TipoRet.OK);
 		assertEquals(s.registrarAmbulancia("SAM 1990", 1), TipoRet.OK);
-		assertEquals(s.habilitarAmbulancia("SAM 1990"), TipoRet.OK);
 		assertEquals(s.registrarAmbulancia("SAM 1989", 1), TipoRet.OK);
-		assertEquals(s.habilitarAmbulancia("SAM 1989"), TipoRet.OK);
 		assertEquals(s.registrarAmbulancia("SAM 1992", 1), TipoRet.OK);
-		assertEquals(s.habilitarAmbulancia("SAM 1992"), TipoRet.OK);
 		assertEquals(s.registrarAmbulancia("SAM 1991", 1), TipoRet.OK);
-		assertEquals(s.habilitarAmbulancia("SAM 1991"), TipoRet.OK);
 		assertEquals(s.registrarAmbulancia("SAM 1995", 1), TipoRet.OK);
 		assertEquals(s.registrarAmbulancia("SAM 1993", 1), TipoRet.OK);
 		assertEquals(s.registrarAmbulancia("SAM 1994", 1), TipoRet.OK);
@@ -249,18 +231,14 @@ public class JUnitTest {
 	
 	@Test
 	public void testInformeAmbulancia_ByCiudadId_CiudadNoExiste() {
-		SistemaImpl s = new SistemaImpl();
+		SistemaEmergencias s = new SistemaEmergencias();
 		assertEquals(s.crearSistemaDeEmergencias(1), TipoRet.OK);
 		s.volverCeroNumeradoraCiudades();
 		assertEquals(s.agregarCiudad("Montevideo"), TipoRet.OK);
 		assertEquals(s.registrarAmbulancia("SAM 1990", 1), TipoRet.OK);
-		assertEquals(s.habilitarAmbulancia("SAM 1990"), TipoRet.OK);
 		assertEquals(s.registrarAmbulancia("SAM 1989", 1), TipoRet.OK);
-		assertEquals(s.habilitarAmbulancia("SAM 1989"), TipoRet.OK);
 		assertEquals(s.registrarAmbulancia("SAM 1992", 1), TipoRet.OK);
-		assertEquals(s.habilitarAmbulancia("SAM 1992"), TipoRet.OK);
 		assertEquals(s.registrarAmbulancia("SAM 1991", 1), TipoRet.OK);
-		assertEquals(s.habilitarAmbulancia("SAM 1991"), TipoRet.OK);
 		assertEquals(s.registrarAmbulancia("SAM 1995", 1), TipoRet.OK);
 		assertEquals(s.registrarAmbulancia("SAM 1993", 1), TipoRet.OK);
 		assertEquals(s.registrarAmbulancia("SAM 1994", 1), TipoRet.OK);
@@ -271,38 +249,35 @@ public class JUnitTest {
 
 	@Test
 	public void testRecibirEmergencia() {
-		SistemaImpl s = new SistemaImpl();
+		SistemaEmergencias s = new SistemaEmergencias();
 		assertEquals(s.crearSistemaDeEmergencias(2), TipoRet.OK);
 		s.volverCeroNumeradoraCiudades();
 		assertEquals(s.agregarCiudad("Montevideo"), TipoRet.OK);
 		assertEquals(s.agregarCiudad("Canelones"), TipoRet.OK);
 		assertEquals(s.registrarAmbulancia("SAM 1990", 1), TipoRet.OK);
-		assertEquals(s.habilitarAmbulancia("SAM 1990"), TipoRet.OK);
 		assertEquals(s.recibirEmergencia("SAM 1990", 2), TipoRet.OK);
 	}
 	
 	@Test
 	public void testRecibirEmergencia_CiudadNoExiste() {
-		SistemaImpl s = new SistemaImpl();
+		SistemaEmergencias s = new SistemaEmergencias();
 		assertEquals(s.crearSistemaDeEmergencias(2), TipoRet.OK);
 		s.volverCeroNumeradoraCiudades();
 		assertEquals(s.agregarCiudad("Montevideo"), TipoRet.OK);
 		assertEquals(s.agregarCiudad("Canelones"), TipoRet.OK);
 		assertEquals(s.registrarAmbulancia("SAM 1990", 1), TipoRet.OK);
-		assertEquals(s.habilitarAmbulancia("SAM 1990"), TipoRet.OK);
 		System.out.println("Retorno testRecibirEmergencia_CiudadNoExiste:");
 		assertEquals(s.recibirEmergencia("SAM 1990", 3), TipoRet.ERROR1);
 	}
 	
 	@Test
 	public void testRecibirEmergencia_AmbulanciaNoExiste() {
-		SistemaImpl s = new SistemaImpl();
+		SistemaEmergencias s = new SistemaEmergencias();
 		assertEquals(s.crearSistemaDeEmergencias(2), TipoRet.OK);
 		s.volverCeroNumeradoraCiudades();
 		assertEquals(s.agregarCiudad("Montevideo"), TipoRet.OK);
 		assertEquals(s.agregarCiudad("Canelones"), TipoRet.OK);
 		assertEquals(s.registrarAmbulancia("SAM 1990", 1), TipoRet.OK);
-		assertEquals(s.habilitarAmbulancia("SAM 1990"), TipoRet.OK);
 		System.out.println("Retorno testRecibirEmergencia_AmbulanciaNoExiste:");
 		assertEquals(s.recibirEmergencia("SAM 1991", 2), TipoRet.ERROR2);
 		System.out.println();
@@ -310,25 +285,23 @@ public class JUnitTest {
 
 	@Test
 	public void testCambiarUbicacion() {
-		SistemaImpl s = new SistemaImpl();
+		SistemaEmergencias s = new SistemaEmergencias();
 		assertEquals(s.crearSistemaDeEmergencias(2), TipoRet.OK);
 		s.volverCeroNumeradoraCiudades();
 		assertEquals(s.agregarCiudad("Montevideo"), TipoRet.OK);
 		assertEquals(s.agregarCiudad("Canelones"), TipoRet.OK);
 		assertEquals(s.registrarAmbulancia("SAM 1990", 1), TipoRet.OK);
-		assertEquals(s.habilitarAmbulancia("SAM 1990"), TipoRet.OK);
 		assertEquals(s.cambiarUbicacion("SAM 1990", 2), TipoRet.OK);
 	}
 	
 	@Test
 	public void testCambiarUbicacion_AmbulanciaNoExiste() {
-		SistemaImpl s = new SistemaImpl();
+		SistemaEmergencias s = new SistemaEmergencias();
 		assertEquals(s.crearSistemaDeEmergencias(2), TipoRet.OK);
 		s.volverCeroNumeradoraCiudades();
 		assertEquals(s.agregarCiudad("Montevideo"), TipoRet.OK);
 		assertEquals(s.agregarCiudad("Canelones"), TipoRet.OK);
 		assertEquals(s.registrarAmbulancia("SAM 1990", 1), TipoRet.OK);
-		assertEquals(s.habilitarAmbulancia("SAM 1990"), TipoRet.OK);
 		System.out.println("Retorno testCambiarUbicacion_AmbulanciaNoExiste:");
 		assertEquals(s.cambiarUbicacion("SAM 1991", 2), TipoRet.ERROR2);
 		System.out.println();
@@ -336,13 +309,12 @@ public class JUnitTest {
 	
 	@Test
 	public void testCambiarUbicacion_CiudadNoExiste() {
-		SistemaImpl s = new SistemaImpl();
+		SistemaEmergencias s = new SistemaEmergencias();
 		assertEquals(s.crearSistemaDeEmergencias(2), TipoRet.OK);
 		s.volverCeroNumeradoraCiudades();
 		assertEquals(s.agregarCiudad("Montevideo"), TipoRet.OK);
 		assertEquals(s.agregarCiudad("Canelones"), TipoRet.OK);
 		assertEquals(s.registrarAmbulancia("SAM 1990", 1), TipoRet.OK);
-		assertEquals(s.habilitarAmbulancia("SAM 1990"), TipoRet.OK);
 		System.out.println("Retorno testCambiarUbicacion_CiudadNoExiste:");
 		assertEquals(s.cambiarUbicacion("SAM 1990", 3), TipoRet.ERROR1);
 		System.out.println();
@@ -350,7 +322,7 @@ public class JUnitTest {
 
 	@Test
 	public void testAgregarCiudad() {
-		SistemaImpl s = new SistemaImpl();
+		SistemaEmergencias s = new SistemaEmergencias();
 		assertEquals(s.crearSistemaDeEmergencias(1), TipoRet.OK);
 		s.volverCeroNumeradoraCiudades();
 		assertEquals(s.agregarCiudad("Montevideo"), TipoRet.OK);
@@ -358,7 +330,7 @@ public class JUnitTest {
 	
 	@Test
 	public void testAgregarCiudad_faltaCapacidad() {
-		SistemaImpl s = new SistemaImpl();
+		SistemaEmergencias s = new SistemaEmergencias();
 		assertEquals(s.crearSistemaDeEmergencias(1), TipoRet.OK);
 		s.volverCeroNumeradoraCiudades();
 		System.out.println("Retorno testAgregarCiudad_faltaCapacidad:");
@@ -368,7 +340,7 @@ public class JUnitTest {
 	
 	@Test
 	public void testAgregarCiudad_YaExiste() {
-		SistemaImpl s = new SistemaImpl();
+		SistemaEmergencias s = new SistemaEmergencias();
 		assertEquals(s.crearSistemaDeEmergencias(2), TipoRet.OK);
 		s.volverCeroNumeradoraCiudades();
 		System.out.println("Retorno testAgregarCiudad_YaExiste:");
@@ -379,7 +351,7 @@ public class JUnitTest {
 	
 	@Test
 	public void testListarCiudades() {
-		SistemaImpl s = new SistemaImpl();
+		SistemaEmergencias s = new SistemaEmergencias();
 		assertEquals(s.crearSistemaDeEmergencias(19), TipoRet.OK);
 		s.volverCeroNumeradoraCiudades();
 		assertEquals(s.agregarCiudad("Artigas"), TipoRet.OK);
@@ -408,7 +380,7 @@ public class JUnitTest {
 
 	@Test
 	public void testAgregarRuta() {
-		SistemaImpl s = new SistemaImpl();
+		SistemaEmergencias s = new SistemaEmergencias();
 		assertEquals(s.crearSistemaDeEmergencias(2), TipoRet.OK);
 		s.volverCeroNumeradoraCiudades();
 		assertEquals(s.agregarCiudad("Artigas"), TipoRet.OK);
@@ -418,7 +390,7 @@ public class JUnitTest {
 	
 	@Test
 	public void testAgregarRuta_CiudadDestinoNoExiste() {
-		SistemaImpl s = new SistemaImpl();
+		SistemaEmergencias s = new SistemaEmergencias();
 		assertEquals(s.crearSistemaDeEmergencias(2), TipoRet.OK);
 		s.volverCeroNumeradoraCiudades();
 		assertEquals(s.agregarCiudad("Artigas"), TipoRet.OK);
@@ -429,7 +401,7 @@ public class JUnitTest {
 	
 	@Test
 	public void testAgregarRuta_CiudadOrigenNoExiste() {
-		SistemaImpl s = new SistemaImpl();
+		SistemaEmergencias s = new SistemaEmergencias();
 		assertEquals(s.crearSistemaDeEmergencias(2), TipoRet.OK);
 		s.volverCeroNumeradoraCiudades();
 		assertEquals(s.agregarCiudad("Artigas"), TipoRet.OK);
@@ -440,7 +412,7 @@ public class JUnitTest {
 	
 	@Test
 	public void testAgregarRuta_DuracionInvalida() {
-		SistemaImpl s = new SistemaImpl();
+		SistemaEmergencias s = new SistemaEmergencias();
 		assertEquals(s.crearSistemaDeEmergencias(2), TipoRet.OK);
 		s.volverCeroNumeradoraCiudades();
 		assertEquals(s.agregarCiudad("Artigas"), TipoRet.OK);
@@ -453,7 +425,7 @@ public class JUnitTest {
 	
 	@Test
 	public void testModificarDemora() {
-		SistemaImpl s = new SistemaImpl();
+		SistemaEmergencias s = new SistemaEmergencias();
 		assertEquals(s.crearSistemaDeEmergencias(2), TipoRet.OK);
 		s.volverCeroNumeradoraCiudades();
 		assertEquals(s.agregarCiudad("Artigas"), TipoRet.OK);
@@ -466,7 +438,7 @@ public class JUnitTest {
 	
 	@Test
 	public void testModificarDemora_CiudadOrigenNoExiste() {
-		SistemaImpl s = new SistemaImpl();
+		SistemaEmergencias s = new SistemaEmergencias();
 		assertEquals(s.crearSistemaDeEmergencias(2), TipoRet.OK);
 		s.volverCeroNumeradoraCiudades();
 		assertEquals(s.agregarCiudad("Artigas"), TipoRet.OK);
@@ -479,7 +451,7 @@ public class JUnitTest {
 	
 	@Test
 	public void testModificarDemora_CiudadDestinoNoExiste() {
-		SistemaImpl s = new SistemaImpl();
+		SistemaEmergencias s = new SistemaEmergencias();
 		assertEquals(s.crearSistemaDeEmergencias(2), TipoRet.OK);
 		s.volverCeroNumeradoraCiudades();
 		assertEquals(s.agregarCiudad("Artigas"), TipoRet.OK);
@@ -492,7 +464,7 @@ public class JUnitTest {
 	
 	@Test
 	public void testModificarDemora_DuracionInvalida() {
-		SistemaImpl s = new SistemaImpl();
+		SistemaEmergencias s = new SistemaEmergencias();
 		assertEquals(s.crearSistemaDeEmergencias(2), TipoRet.OK);
 		s.volverCeroNumeradoraCiudades();
 		assertEquals(s.agregarCiudad("Artigas"), TipoRet.OK);
@@ -505,14 +477,13 @@ public class JUnitTest {
 
 	@Test
 	public void testAmbulanciaMasCercana_MismaCiudad() {
-		SistemaImpl s = new SistemaImpl();
+		SistemaEmergencias s = new SistemaEmergencias();
 		assertEquals(s.crearSistemaDeEmergencias(2), TipoRet.OK);
 		s.volverCeroNumeradoraCiudades();
 		assertEquals(s.agregarCiudad("Artigas"), TipoRet.OK);
 		assertEquals(s.agregarCiudad("Salto"), TipoRet.OK);
 		assertEquals(s.agregarRuta(1, 2, 30), TipoRet.OK);
 		assertEquals(s.registrarAmbulancia("SAM 1989", 1), TipoRet.OK);
-		assertEquals(s.habilitarAmbulancia("SAM 1989"), TipoRet.OK);
 		System.out.println("Retorno testAmbulanciaMasCercana_MismaCiudad:");
 		assertEquals(s.ambulanciaMasCercana(1), TipoRet.OK);
 		System.out.println();
@@ -520,49 +491,28 @@ public class JUnitTest {
 	
 	@Test
 	public void testAmbulanciaMasCercana_CiudadLimitrofe() {
-		SistemaImpl s = new SistemaImpl();
+		SistemaEmergencias s = new SistemaEmergencias();
 		assertEquals(s.crearSistemaDeEmergencias(2), TipoRet.OK);
 		s.volverCeroNumeradoraCiudades();
 		assertEquals(s.agregarCiudad("Artigas"), TipoRet.OK);
 		assertEquals(s.agregarCiudad("Salto"), TipoRet.OK);
 		assertEquals(s.agregarRuta(1, 2, 30), TipoRet.OK);
 		assertEquals(s.registrarAmbulancia("SAM 1989", 1), TipoRet.OK);
-		assertEquals(s.habilitarAmbulancia("SAM 1989"), TipoRet.OK);
 		System.out.println("Retorno testAmbulanciaMasCercana_CiudadLimitrofe:");
 		assertEquals(s.ambulanciaMasCercana(2), TipoRet.OK);
 		System.out.println();
 	}
 	
 	@Test
-	public void testAmbulanciaMasCercana_NO_CiudadLimitrofe() {
-		SistemaImpl s = new SistemaImpl();
-		assertEquals(s.crearSistemaDeEmergencias(3), TipoRet.OK);
-		s.volverCeroNumeradoraCiudades();
-		assertEquals(s.agregarCiudad("Artigas"), TipoRet.OK);
-		assertEquals(s.agregarCiudad("Salto"), TipoRet.OK);
-		assertEquals(s.agregarCiudad("Paysandu"), TipoRet.OK);
-		assertEquals(s.agregarRuta(1, 2, 30), TipoRet.OK);
-		assertEquals(s.registrarAmbulancia("SAM 1989", 1), TipoRet.OK);
-		assertEquals(s.habilitarAmbulancia("SAM 1989"), TipoRet.OK);
-		System.out.println("Retorno testAmbulanciaMasCercana_MismaCiudad:");
-		assertEquals(s.ambulanciaMasCercana(3), TipoRet.OK);
-		System.out.println();
-	}
-	
-	/*
-	
-	@Test
 	public void testAmbulanciaMasCercana_MasDeUnaAmbulanciaDisponible() {
-		SistemaImpl s = new SistemaImpl();
+		SistemaEmergencias s = new SistemaEmergencias();
 		assertEquals(s.crearSistemaDeEmergencias(2), TipoRet.OK);
 		s.volverCeroNumeradoraCiudades();
 		assertEquals(s.agregarCiudad("Artigas"), TipoRet.OK);
 		assertEquals(s.agregarCiudad("Salto"), TipoRet.OK);
 		assertEquals(s.agregarRuta(1, 2, 30), TipoRet.OK);
 		assertEquals(s.registrarAmbulancia("SAM 1995", 1), TipoRet.OK);
-		assertEquals(s.habilitarAmbulancia("SAM 1995"), TipoRet.OK);
 		assertEquals(s.registrarAmbulancia("SAM 1989", 1), TipoRet.OK);
-		assertEquals(s.habilitarAmbulancia("SAM 1989"), TipoRet.OK);
 		System.out.println("Retorno testAmbulanciaMasCercana_MasDeUnaAmbulanciaDisponible:");
 		assertEquals(s.ambulanciaMasCercana(2), TipoRet.OK);
 		System.out.println();
@@ -570,14 +520,13 @@ public class JUnitTest {
 	
 	@Test
 	public void testAmbulanciaMasCercana_CiudadNoExiste() {
-		SistemaImpl s = new SistemaImpl();
+		SistemaEmergencias s = new SistemaEmergencias();
 		assertEquals(s.crearSistemaDeEmergencias(2), TipoRet.OK);
 		s.volverCeroNumeradoraCiudades();
 		assertEquals(s.agregarCiudad("Artigas"), TipoRet.OK);
 		assertEquals(s.agregarCiudad("Salto"), TipoRet.OK);
 		assertEquals(s.agregarRuta(1, 2, 30), TipoRet.OK);
 		assertEquals(s.registrarAmbulancia("SAM 1989", 1), TipoRet.OK);
-		assertEquals(s.habilitarAmbulancia("SAM 1989"), TipoRet.OK);
 		System.out.println("Retorno testAmbulanciaMasCercana_CiudadNoExiste:");
 		assertEquals(s.ambulanciaMasCercana(3), TipoRet.ERROR1);
 		System.out.println();
@@ -585,23 +534,21 @@ public class JUnitTest {
 
 	@Test
 	public void testRegistrarChofer() {
-		SistemaImpl s = new SistemaImpl();
+		SistemaEmergencias s = new SistemaEmergencias();
 		assertEquals(s.crearSistemaDeEmergencias(1), TipoRet.OK);
 		s.volverCeroNumeradoraCiudades();
 		assertEquals(s.agregarCiudad("Artigas"), TipoRet.OK);
 		assertEquals(s.registrarAmbulancia("SAM 1989", 1), TipoRet.OK);
-		assertEquals(s.habilitarAmbulancia("SAM 1989"), TipoRet.OK);
 		assertEquals(s.registrarChofer("SAM 1989", "NombreChofer", "1.111.111-1"), TipoRet.OK);
 	}
 	
 	@Test
 	public void testRegistrarChofer_AmbulanciaNoExiste() {
-		SistemaImpl s = new SistemaImpl();
+		SistemaEmergencias s = new SistemaEmergencias();
 		assertEquals(s.crearSistemaDeEmergencias(1), TipoRet.OK);
 		s.volverCeroNumeradoraCiudades();
 		assertEquals(s.agregarCiudad("Artigas"), TipoRet.OK);
 		assertEquals(s.registrarAmbulancia("SAM 1989", 1), TipoRet.OK);
-		assertEquals(s.habilitarAmbulancia("SAM 1989"), TipoRet.OK);
 		System.out.println("Retorno testRegistrarChofer_AmbulanciaNoExiste:");
 		assertEquals(s.registrarChofer("SAM 1990", "NombreChofer", "1.111.111-1"), TipoRet.ERROR1);
 		System.out.println();
@@ -609,24 +556,22 @@ public class JUnitTest {
 
 	@Test
 	public void testEliminarChofer() {
-		SistemaImpl s = new SistemaImpl();
+		SistemaEmergencias s = new SistemaEmergencias();
 		assertEquals(s.crearSistemaDeEmergencias(1), TipoRet.OK);
 		s.volverCeroNumeradoraCiudades();
 		assertEquals(s.agregarCiudad("Artigas"), TipoRet.OK);
 		assertEquals(s.registrarAmbulancia("SAM 1989", 1), TipoRet.OK);
-		assertEquals(s.habilitarAmbulancia("SAM 1989"), TipoRet.OK);
 		assertEquals(s.registrarChofer("SAM 1989", "NombreChofer", "1.111.111-1"), TipoRet.OK);
 		assertEquals(s.eliminarChofer("SAM 1989", "1.111.111-1"), TipoRet.OK);
 	}
 	
 	@Test
 	public void testEliminarChofer_NoExisteAmbulancia() {
-		SistemaImpl s = new SistemaImpl();
+		SistemaEmergencias s = new SistemaEmergencias();
 		assertEquals(s.crearSistemaDeEmergencias(1), TipoRet.OK);
 		s.volverCeroNumeradoraCiudades();
 		assertEquals(s.agregarCiudad("Artigas"), TipoRet.OK);
 		assertEquals(s.registrarAmbulancia("SAM 1989", 1), TipoRet.OK);
-		assertEquals(s.habilitarAmbulancia("SAM 1989"), TipoRet.OK);
 		assertEquals(s.registrarChofer("SAM 1989", "NombreChofer", "1.111.111-1"), TipoRet.OK);
 		System.out.println("Retorno testRegistrarChofer_AmbulanciaNoExiste:");
 		assertEquals(s.eliminarChofer("SAM 1990", "1.111.111-1"), TipoRet.ERROR1);
@@ -635,12 +580,11 @@ public class JUnitTest {
 	
 	@Test
 	public void testEliminarChofer_ChoferNoAsociado() {
-		SistemaImpl s = new SistemaImpl();
+		SistemaEmergencias s = new SistemaEmergencias();
 		assertEquals(s.crearSistemaDeEmergencias(1), TipoRet.OK);
 		s.volverCeroNumeradoraCiudades();
 		assertEquals(s.agregarCiudad("Artigas"), TipoRet.OK);
 		assertEquals(s.registrarAmbulancia("SAM 1989", 1), TipoRet.OK);
-		assertEquals(s.habilitarAmbulancia("SAM 1989"), TipoRet.OK);
 		assertEquals(s.registrarChofer("SAM 1989", "NombreChofer", "1.111.111-1"), TipoRet.OK);
 		System.out.println("Retorno testEliminarChofer_ChoferNoAsociado:");
 		assertEquals(s.eliminarChofer("SAM 1989", "1.111.111-2"), TipoRet.ERROR2);
@@ -649,12 +593,11 @@ public class JUnitTest {
 
 	@Test
 	public void testInformeChoferes() {
-		SistemaImpl s = new SistemaImpl();
+		SistemaEmergencias s = new SistemaEmergencias();
 		assertEquals(s.crearSistemaDeEmergencias(1), TipoRet.OK);
 		s.volverCeroNumeradoraCiudades();
 		assertEquals(s.agregarCiudad("Artigas"), TipoRet.OK);
 		assertEquals(s.registrarAmbulancia("SAM 1989", 1), TipoRet.OK);
-		assertEquals(s.habilitarAmbulancia("SAM 1989"), TipoRet.OK);
 		assertEquals(s.registrarChofer("SAM 1989", "Silvina", "1.111.111-1"), TipoRet.OK);
 		assertEquals(s.registrarChofer("SAM 1989", "Laura", "1.222.222-2"), TipoRet.OK);
 		assertEquals(s.registrarChofer("SAM 1989", "Jorge", "1.333.333-3"), TipoRet.OK);
@@ -668,7 +611,7 @@ public class JUnitTest {
 	
 	@Test
 	public void testInformeCiudades() {
-		SistemaImpl s = new SistemaImpl();
+		SistemaEmergencias s = new SistemaEmergencias();
 		assertEquals(s.crearSistemaDeEmergencias(4), TipoRet.OK);
 		s.volverCeroNumeradoraCiudades();
 		
@@ -740,8 +683,8 @@ public class JUnitTest {
 	
 	@Test
 	public void testCiudadesEnRadio() {
-		SistemaImpl s = new SistemaImpl();
-		assertEquals(s.crearSistemaDeEmergencias(7																																																																																																																																																																																																		), TipoRet.OK);
+		SistemaEmergencias s = new SistemaEmergencias();
+		assertEquals(s.crearSistemaDeEmergencias(7), TipoRet.OK);
 		s.volverCeroNumeradoraCiudades();
 		
 		//Desde Montevideo se puede llegar a Canelones pero no a Maldonado. Para ir a Maldonado hay que pasar x Canelones
@@ -765,12 +708,50 @@ public class JUnitTest {
 		System.out.println();
 	}
 																			
-	
-	
-	/*
 	@Test
 	public void testRutaMasRapida() {
-		fail("Not yet implemented");
+		SistemaEmergencias s = new SistemaEmergencias();
+		assertEquals(s.crearSistemaDeEmergencias(7), TipoRet.OK);
+		s.volverCeroNumeradoraCiudades();
+		assertEquals(s.agregarCiudad("Montevideo"), TipoRet.OK);
+		assertEquals(s.agregarCiudad("Canelones"), TipoRet.OK);
+		assertEquals(s.agregarCiudad("Maldonado"), TipoRet.OK);
+		assertEquals(s.agregarCiudad("Rocha"), TipoRet.OK);
+		assertEquals(s.agregarCiudad("Colonia"), TipoRet.OK);
+		assertEquals(s.agregarCiudad("Artigas"), TipoRet.OK);
+		assertEquals(s.agregarRuta(1, 2, 30), TipoRet.OK);
+		assertEquals(s.agregarRuta(2, 3, 15), TipoRet.OK);
+		assertEquals(s.agregarRuta(3, 4, 10), TipoRet.OK);
+		assertEquals(s.agregarRuta(4, 5, 30), TipoRet.OK);
+		assertEquals(s.agregarRuta(5, 6, 5), TipoRet.OK);
+		System.out.println("Retorno testRutaMasRapida:");
+		assertEquals(s.rutaMasRapida(1, 6), TipoRet.OK);
+		System.out.println();
 	}
-	 */
+	
+	@Test
+	public void testRutaMasRapida_CiudadOrigenNoExiste() {
+		SistemaEmergencias s = new SistemaEmergencias();
+		assertEquals(s.crearSistemaDeEmergencias(2), TipoRet.OK);
+		s.volverCeroNumeradoraCiudades();
+		assertEquals(s.agregarCiudad("Montevideo"), TipoRet.OK);
+		assertEquals(s.agregarCiudad("Canelones"), TipoRet.OK);
+		assertEquals(s.agregarRuta(1, 2, 30), TipoRet.OK);
+		System.out.println("Retorno testRutaMasRapida_CiudadOrigenNoExiste:");
+		assertEquals(s.rutaMasRapida(3, 1), TipoRet.ERROR1);
+		System.out.println();
+	}
+	
+	@Test
+	public void testRutaMasRapida_CiudadDestinoNoExiste() {
+		SistemaEmergencias s = new SistemaEmergencias();
+		assertEquals(s.crearSistemaDeEmergencias(2), TipoRet.OK);
+		s.volverCeroNumeradoraCiudades();
+		assertEquals(s.agregarCiudad("Montevideo"), TipoRet.OK);
+		assertEquals(s.agregarCiudad("Canelones"), TipoRet.OK);
+		assertEquals(s.agregarRuta(1, 2, 30), TipoRet.OK);
+		System.out.println("Retorno testRutaMasRapida_CiudadDestinoNoExiste:");
+		assertEquals(s.rutaMasRapida(1, 3), TipoRet.ERROR2);
+		System.out.println();
+	}
 }

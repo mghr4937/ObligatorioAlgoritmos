@@ -7,7 +7,7 @@ public class NodoABB {
 	private NodoABB izq;
 	private NodoABB der;
 	
-	public NodoABB(int clave, String dato, NodoABB izq, NodoABB der) {
+	public NodoABB(int clave, Object dato, NodoABB izq, NodoABB der) {
 		this.clave = clave;
 		this.dato = dato;
 		this.izq = izq;

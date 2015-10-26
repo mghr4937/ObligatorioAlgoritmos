@@ -10,8 +10,6 @@ public interface ICola extends IMetodosComunes{
 	
 	boolean estaLlena();
 
-	//Object inicio();
-
 	NodoCola desEncolar();
 
 	void vaciar();
